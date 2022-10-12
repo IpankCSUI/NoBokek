@@ -1,4 +1,4 @@
-# 👋 Kelompok F10 - NoBokek 👋
+# 👋 Kelompok E12 - NoBokek 👋
 
 Pemrograman Berbasis Platform (CSGE602022) - diselenggarakan oleh Fakultas Ilmu Komputer Universitas Indonesia, Semester Ganjil 2022/2023
 
