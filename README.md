@@ -8,7 +8,7 @@ Pemrograman Berbasis Platform (CSGE602022) - diselenggarakan oleh Fakultas Ilmu 
 1. Rafli Wasis Anggito (2106751442)
 2. Ian Suryadi Timothy H (2106750875)
 3. Symphony Cellis Zaana Saraaya (2106752060)
-4. Marc Salvadore Silitonga  
+4. Marc Salvadore Silitonga (2106705543)
 5. Irfan Satya Hendrasto (2106751682)
 
 ## Tautan Aplikasi Heroku
