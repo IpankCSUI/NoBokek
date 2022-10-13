@@ -18,11 +18,13 @@ Pemrograman Berbasis Platform (CSGE602022) - diselenggarakan oleh Fakultas Ilmu 
 Website ini dibuat untuk membantu mempermudah pengelolaan keuangan pengguna atau user khususnya bagi mahasiswa. Pada website ini, pengguna dapat mencatat pengeluaran serta pendapatan kemudian melihat perkembangannya perminggu dengan penyajian yang menarik dan mudah dimengerti. Website ini juga menyediakan info terkini mengenai hal-hal yang terkait dengan dunia ekonomi dan finansial. Terdapat juga forum untuk pengguna melakukan posting.
 
 ## Daftar modul yang akan diimplementasikan 📃
-1. Homepage Aplikasi (Membuat homepage aplikasi yang berisikan beberapa info terkini tentang finansial serta penjelasan singkat website NoBokek)
-2. Add Income / Outcome + Target Pengeluaran User (Membuat fitur yang berupa form untuk menambahkan input dan outcome user serta target pengeluaran user pada setiap bulannya)
-3. Statistik Outcome / Income User (Menyajikan data outcome dan income pengguna menggunakan grafik)
-4. Report User Info (Menampilkan laporan yang berupa outcome user dan detail pengeluaran yang ingin dilihat user)
-5. Forum untuk posting (User yang sudah login dapat melakukan posting mengenai hal yang berkaitan dengan keuangan kemudian dapat dilihat oleh user lain)
+1. Autentikasi pengguna (Login, Sign Up)
+2. Homepage Aplikasi (Berisikan penjelasan singkat website NoBokek)
+3. Homepage Aplikasi (Berisikan beberapa info terkini penjelasan singkat website NoBokek dan user dapat menggunakan fitur search) 
+4. Add Income / Outcome + Target Pengeluaran User (Membuat fitur yang berupa form untuk menambahkan input dan outcome user serta target pengeluaran user pada setiap bulannya)
+5. Statistik Outcome / Income User (Menyajikan data outcome dan income pengguna menggunakan grafik, user dapat melakukan filter berdasarkan pengeluaran dan pemasukkan terendah dan tertinggi) 
+6. Report User Info (Menampilkan laporan yang berupa outcome user dan detail pengeluaran yang ingin dilihat user, User juga dapat memakai filter untuk mencari bulan)
+7. Forum untuk posting (User yang sudah login dapat melakukan posting mengenai hal yang berkaitan dengan keuangan kemudian dapat dilihat oleh user lain)
 
 ## Role atau peran pengguna beserta deskripsinya 👥
 **1. Guest**
