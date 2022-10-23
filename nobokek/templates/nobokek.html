@@ -1,10 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h5>Nama: </h5>
-<p>Fill me!</p>
+<nav class="navbar bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">NoBokek App</a>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    <button class="btn btn-outline-success" type="button"> 
+        <a href="{% url 'nobokek:login' %}">Login</a>
+    </button>
+  </div>
+</nav>
 
-<table>
+<div class="card mx-auto" style="width: 30rem;">
+    <div class="card-body">
+        <p>
+            NoBokek ini dibuat untuk membantu mempermudah pengelolaan keuangan pengguna atau user khususnya bagi mahasiswa. Pada NoBokek, pengguna dapat mencatat pengeluaran serta pendapatan kemudian melihat perkembangannya perminggu dengan penyajian yang menarik dan mudah dimengerti. NoBokek ini juga menyediakan info terkini mengenai hal-hal yang terkait dengan dunia ekonomi dan finansial. Terdapat juga forum untuk pengguna melakukan posting.
+        </p>
+    </div>
+  </div> 
+
+
+<h5>Berita Terkini</h5>
+<div class="card">
+    <div class="card-body">
+        <button class="btn btn-outline-success" type="button">
+            Clipan Finance Indonesia Bukukan Laba Rp 75,88 Miliar di Kuartal III 2022</button>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <button class="btn btn-outline-success" type="button">
+            Clipan Finance Indonesia Bukukan Laba Rp 75,88 Miliar di Kuartal III 2022</button>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <button class="btn btn-outline-success" type="button">
+            Clipan Finance Indonesia Bukukan Laba Rp 75,88 Miliar di Kuartal III 2022</button>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <button class="btn btn-outline-success" type="button">
+            Clipan Finance Indonesia Bukukan Laba Rp 75,88 Miliar di Kuartal III 2022</button>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <button class="btn btn-outline-success" type="button">
+            Clipan Finance Indonesia Bukukan Laba Rp 75,88 Miliar di Kuartal III 2022</button>
+    </div>
+</div>
+
+
+<!-- <table>
     <tr>
     <th>Nama Barang</th>
     <th>Harga Barang</th>
@@ -18,8 +70,7 @@
         <th>{{barang.deskripsi}}</th>
     </tr>
 {% endfor %}
-</table>
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-<button><a href="{% url 'nobokek:logout' %}">Logout</a></button>
+</table> -->
+
 
 {% endblock content %}

@@ -11,13 +11,13 @@ from django.urls import reverse
 from nobokek.models import BarangWishlist
 ...
 ...
-@login_required(login_url='/nobokek/login/')
+# @login_required(login_url='/nobokek/login/')
 def show_nobokek(request):
     data_barang_wishlist = BarangWishlist.objects.all()
     context = {
         'list_barang': data_barang_wishlist,
         'nama': 'Kak Cinoy',
-        'last_login': request.COOKIES['last_login'],
+        
     }
     return render(request, "nobokek.html", context)
 
