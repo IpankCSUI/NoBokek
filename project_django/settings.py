@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'example_app',
     'nobokek',
     'forum',
+    'add',
+    'report',
 
 ]
 

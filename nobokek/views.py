@@ -13,7 +13,7 @@ from nobokek.models import BarangWishlist
 from nobokek.forms import Stat
 ...
 ...
-# @login_required(login_url='/nobokek/login/')
+@login_required(login_url='/nobokek/login/')
 def show_nobokek(request):
     data_barang_wishlist = BarangWishlist.objects.all()
     context = {
@@ -22,6 +22,15 @@ def show_nobokek(request):
         
     }
     return render(request, "nobokek.html", context)
+
+def show_guest(request):
+    data_barang_wishlist = BarangWishlist.objects.all()
+    context = {
+        'list_barang': data_barang_wishlist,
+        'nama': 'Kak Cinoy',
+        
+    }
+    return render(request, "guest.html", context)
 
 def register(request):
     form = UserCreationForm()
