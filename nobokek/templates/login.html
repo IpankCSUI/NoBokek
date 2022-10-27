@@ -10,8 +10,7 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
-  </nav>
-
+</nav>
 {% endblock meta %}
 
 {% block content %}
@@ -49,13 +48,16 @@
                 {% endfor %}
             </ul>
         {% endif %}     
-            
-        Belum mempunyai akun? <a href="{% url 'nobokek:register' %}">Buat Akun</a>
+        <div>
+            <a href="{% url 'nobokek:guest' %}"> Log in as guest </a>
+        </div>
+        <div>
+            Belum mempunyai akun? <a href="{% url 'nobokek:register' %}">Buat Akun</a>
+        </div>
+        
     
     </div>
   </div>
 </div>
-
-
 
 {% endblock content %}
