@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('example_app.urls')),
     path('nobokek/', include('nobokek.urls')),
     path('add/', include('add.urls')),
+    path('report/', include('report.urls')),
 ]
