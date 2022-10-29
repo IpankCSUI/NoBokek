@@ -197,6 +197,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 1000;
   }
    header .logo{
     color: #ffe26a;
@@ -218,13 +219,11 @@
     text-decoration: none;
     padding: 6px 15px;
     color: #ffe26a;
-    border-radius: 20px;
   }
-  header ul li a:hover, 
-  header ul li a.active{
-    background:  #ffe26a;
-    color: #75c9b7;
-
+  header ul li a:hover{
+    background: #ffe26a;
+    color: #abd699;
+    border-radius: 20px;
   }
   section{
     position: relative;
@@ -281,16 +280,17 @@
 <header>
   <a href="#" class="logo">NoBokek App</a>
   <ul>
-    <li><a href="#" class="active">Home</a></li>
-    <li><a href="#">Add</a></li>
+    <li><a href="{% url 'nobokek:show_nobokek' %}">Home</a></li>
+    <li><a href="{% url 'add:show_add' %}">Add</a></li>
     <li><a href="#">Statistic</a></li>
-    <li><a href="#">Report User Info</a></li>
+    <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
     <li><a href="#">Forum</a></li>
   </ul>
 </header>
+
 <section>
   <h2 id="text">Let's Track Your Money</h2>
-  <a href="#" id="btn">Login</a>
+  <a href="{% url 'nobokek:logout' %}" id="btn">Logout</a>
 </section>
 <div class="sec">
   <h2>About us</h2>
