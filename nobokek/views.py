@@ -1,16 +1,14 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
-from django.http import HttpRequest
 from django.urls import reverse
 from nobokek.models import BarangWishlist
-from nobokek.forms import Stat
 ...
 ...
 @login_required(login_url='/nobokek/login/')
@@ -65,19 +63,3 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('nobokek:login'))
     response.delete_cookie('last_login')
     return response
-
-def show_statistic(request: HttpRequest):
-    if request.method == "POST":
-        form = Stat(request.POST)
-        if form.is_valid():
-            task = BarangWishlist(
-                date=str(datetime.datetime.now().date()),
-                harga_barang=form.cleaned_data["harga"],
-                user=request.user,
-            )
-            task.save()
-            messages.success(request, "Saved success!")
-            return redirect("nobokek:show_nobokek")
-    form = Stat()
-    context = {"form": form}
-    return render(request, "", context)
