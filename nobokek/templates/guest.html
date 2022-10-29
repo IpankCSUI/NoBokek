@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
-
+<link rel="stylesheet" href="style.css">
 {% block content %}
 <nav class="navbar bg-info">
   <div class="container-fluid">
     <a class="navbar-brand">NoBokek App</a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
     <a href="{% url 'nobokek:login' %}">
         <button class="btn btn-outline-success bg-warning" type="button" href="{% url 'nobokek:login' %}">
             Login
         </button>
     </a>
+    <form class="d-flex ms-auto" role="search">
+      <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    
     
   </div>
 </nav>
@@ -63,22 +64,6 @@
     </div>
 </div>
 
-
-<!-- <table>
-    <tr>
-    <th>Nama Barang</th>
-    <th>Harga Barang</th>
-    <th>Deskripsi</th>
-    </tr>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for barang in list_barang %}
-    <tr>
-        <th>{{barang.nama_barang}}</th>
-        <th>{{barang.harga_barang}}</th>
-        <th>{{barang.deskripsi}}</th>
-    </tr>
-{% endfor %}
-</table> -->
 
 
 {% endblock content %}
