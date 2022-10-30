@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block meta %}
 <!-- get data from /todolist/json -->
 <script>
@@ -216,7 +216,7 @@
     bottom: 0;
     width: 100%;
     height: 100px;
-    background: linear-gradient(to bottom, #abd699, #75c9b7);
+    background:#abd699;
     z-index: 1000;
   }
 
@@ -284,10 +284,54 @@
   <h2 id="text">Let's Track Your Money</h2>
   <a href="#" id="btn">Learn More</a>
 </section>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="card h-100">
+      <img src="{% static 'images/berita1.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://news.detik.com/adv-nhl-detikcom/d-6376649/bagikan-momen-financial-fears-di-ig-bisa-dapet-jutaan-rupiah-mau" target="_blank">Bagikan Momen Financial Fears di IG Bisa Dapet Jutaan Rupiah, Mau?</a></h5>
+        <p class="card-text">Jakarta - Ketakutan finansial atau financial fear seringkali membuat hati ketar-ketir dan cemas. Ketakutan ini utamanya dirasakan oleh...</p>
+        
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="{% static 'images/berita1.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://finansial.bisnis.com/read/20221029/90/1592800/bulan-inklusi-keuangan-bank-hingga-asuransi-raup-jutaan-nasabah-baru" target="_blank">Bulan Inklusi Keuangan: Bank hingga Asuransi Raup Jutaan Nasabah Baru</a></h5>
+        <p class="card-text">Lembaga jasa keuangan, seperti bank dan asuransi, menggelar pembukaan rekening, polis, efek dan jasa lainnya untuk nasabah di bulan inklusi...</p>
+        
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="{% static 'images/berita1.png' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://www.jpnn.com/news/waduh-356786-phising-di-sektor-finansial-terdeteksi-di-indonesia" target="_blank">Waduh! 356.786 Phising di Sektor Finansial Terdeteksi di Indonesia</a></h5>
+        <p class="card-text">Kaspersky mengungkapkan sebanyak 356.786 phishing terkait keuangan (finansial) terdeteksi dan telah diblokir terhadap pengguna di Indonesia.</p>
+        
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="sec">
   <h2>About us</h2>
   <p>NoBokek ini dibuat untuk membantu mempermudah pengelolaan keuangan pengguna atau user khususnya bagi mahasiswa. Pengguna dapat mencatat pengeluaran serta pendapatan kemudian melihat perkembangannya perminggu dengan penyajian yang menarik dan mudah dimengerti. NoBokek juga menyediakan info terkini mengenai hal-hal yang terkait dengan dunia ekonomi dan finansial. Terdapat juga forum untuk pengguna melakukan posting.</p>
 </div>
+
 
   <!-- backdrop modals -->
   <div class="backdrop mt-14 h-[100vh] w-[100vw] bg-red-100 z-10 opacity-80"></div>
@@ -310,6 +354,7 @@
     </div>
     <button class="send-now-button m-3 bg-green-500 hover:bg-green-700 hover:cursor-pointer px-6 py-2 rounded-lg">Send Now</button>
   </div>
+
 
   <script>
     let searchBtn = document.querySelector('.searchBtn');
