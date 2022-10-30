@@ -238,6 +238,38 @@
     z-index: 9;
     transform: translateY(100px);
   }
+  .section-padding{
+    padding: 200px 0;
+  }
+  .carousel-item{
+    height: 100vh;
+    min-height: 300px;
+  }
+  .carousel-caption{
+    bottom: 220px;
+    z-index: 2;
+  }
+  .carousel-caption h5{
+    font-size: 45px;
+    letter-spacing: 2px;
+    margin-top: 25px;
+  }
+  .carousel-caption p{
+    width: 60%;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.9;
+  }
+  .carousel-inner::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+  }
   .sec{
     position: relative;
     padding: 100px;
@@ -299,7 +331,7 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://cdn.discordapp.com/attachments/895947904437592084/1036212692307935332/berita1.jpg" class="d-block w-100" alt="...">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036224506987036753/add.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Add</h5>
         <p>Fitur yang berupa form untuk menambahkan input dan outcome user serta target pengeluaran user pada setiap bulannya</p>
@@ -307,7 +339,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="https://cdn.discordapp.com/attachments/895947904437592084/1036212692647677982/berita2.jpg" class="d-block w-100" alt="...">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036224507897200690/statistik.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Statistic</h5>
         <p>Menyajikan data outcome dan income pengguna menggunakan grafik, user dapat melakukan filter berdasarkan pengeluaran dan pemasukkan terendah dan tertinggi</p>
@@ -315,7 +347,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="https://cdn.discordapp.com/attachments/895947904437592084/1036212692869984286/berita3.jpg" class="d-block w-100" alt="...">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036224507427442748/report.png" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Report User Info</h5>
         <p>Menampilkan laporan yang berupa outcome user dan detail pengeluaran yang ingin dilihat user, User juga dapat memakai filter untuk mencari bulan</p>
@@ -323,7 +355,7 @@
       </div>
     </div>
     <div class="carousel-item">
-      <img src="https://cdn.discordapp.com/attachments/895947904437592084/1036212692869984286/berita3.jpg" class="d-block w-100" alt="...">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036224507230294066/forum.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>Forum</h5>
         <p>User yang sudah login dapat melakukan posting mengenai hal yang berkaitan dengan keuangan kemudian dapat dilihat oleh user lain</p>
@@ -345,16 +377,16 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col">
     <div class="card h-100">
-      <img src="https://cdn.discordapp.com/attachments/895947904437592084/1036212692307935332/berita1.jpg" class="card-img-top" alt="...">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036221394821853204/berita1.jpg" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title"><a href="https://news.detik.com/adv-nhl-detikcom/d-6376649/bagikan-momen-financial-fears-di-ig-bisa-dapet-jutaan-rupiah-mau" target="_blank">Bagikan Momen Financial Fears di IG Bisa Dapet Jutaan Rupiah, Mau?</a></h5>
-        <p class="card-text">Jakarta - Ketakutan finansial atau financial fear seringkali membuat hati ketar-ketir dan cemas. Ketakutan ini utamanya dirasakan oleh...</p> 
+        <h5 class="card-title"><a href="https://wahananews.co/serbaserbi/tips-untuk-anak-muda-mengatur-finansial-dengan-baik-adea5swVdp" target="_blank">Tips untuk Anak Muda Mengatur Finansial Dengan Baik</a></h5>
+        <p class="card-text">Dengan adanya financial footprint, maka seluruh kegiatan finansial pun dapat terkoneksi dan terlacak oleh sistem. Oleh sebab itu, anak muda...</p> 
       </div>
     </div>
   </div>
   <div class="col">
     <div class="card h-100">
-      <img src="https://cdn.discordapp.com/attachments/895947904437592084/1036212692647677982/berita2.jpg" class="card-img-top" alt="...">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036220071158227004/berita2.jpg" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title"><a href="https://finansial.bisnis.com/read/20221029/90/1592800/bulan-inklusi-keuangan-bank-hingga-asuransi-raup-jutaan-nasabah-baru" target="_blank">Bulan Inklusi Keuangan: Bank hingga Asuransi Raup Jutaan Nasabah Baru</a></h5>
         <p class="card-text">Lembaga jasa keuangan, seperti bank dan asuransi, menggelar pembukaan rekening, polis, efek dan jasa lainnya untuk nasabah di bulan inklusi...</p>
@@ -364,7 +396,7 @@
   </div>
   <div class="col">
     <div class="card h-100">
-      <img src="https://cdn.discordapp.com/attachments/895947904437592084/1036212692869984286/berita3.jpg" class="card-img-top" alt="...">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036220071456034897/berita3.jpg" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title"><a href="https://www.jpnn.com/news/waduh-356786-phising-di-sektor-finansial-terdeteksi-di-indonesia" target="_blank">Waduh! 356.786 Phising di Sektor Finansial Terdeteksi di Indonesia</a></h5>
         <p class="card-text">Kaspersky mengungkapkan sebanyak 356.786 phishing terkait keuangan (finansial) terdeteksi dan telah diblokir terhadap pengguna di Indonesia.</p>
