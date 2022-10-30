@@ -11,6 +11,10 @@ from django.http import HttpRequest
 from django.urls import reverse
 from nobokek.models import BarangWishlist
 from nobokek.forms import Stat
+from nobokek.models import ContactUs
+from django.http import HttpResponse
+from django.core import serializers
+from datetime import datetime 
 ...
 ...
 @login_required(login_url='/nobokek/login/')
@@ -81,3 +85,18 @@ def show_statistic(request: HttpRequest):
     form = Stat()
     context = {"form": form}
     return render(request, "", context)
+
+@login_required(login_url="/nobokek/login")
+def show_nobokek_json(request):
+    tasks = ContactUs.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', tasks), content_type='application/json')
+
+def add_task(request):
+    if request.method == "POST":
+        name = request.POST.get('nama')
+        email = request.POST.get('alamat')
+        problem = request.POST.get('masalah')
+
+        new_task = ContactUs(user=request.user, nama=name, alamat=email, masalah=problem, date=datetime.now())
+        new_task.save()
+    return HttpResponse('')
