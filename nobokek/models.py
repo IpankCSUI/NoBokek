@@ -16,5 +16,5 @@ class ContactUs(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.now)
     nama = models.CharField(max_length=150)
-    email = models.EmailField()
+    alamat = models.EmailField()
     masalah =models.CharField(max_length=1000)
