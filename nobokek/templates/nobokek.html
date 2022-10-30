@@ -1,182 +1,33 @@
 {% extends 'base.html' %}
 
+{% block meta %}
+<!-- get data from /todolist/json -->
+<script>
+  $(document).ready(function(){
+    $('.modal').hide();
+    $('.backdrop').hide();
+    $.get('/nobokek/json/', function(data, status){
+      let content = '';
+      for (let i=0; i<data.length; i++){
+        content += `
+          <div class="text-white hover:scale-105 duration-150 flex flex-row justify-between p-3 lg:w-[30rem] sm:w-[25rem] h-24 bg-zinc-800 box-shadow-md rounded-xl">
+              <div>
+              <h2 class="font-semibold lg:text-md sm:text-sm">${data[i].fields.nama}</h2>
+              <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.alamat}</h3>
+              <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.masalah}</h3>
+              <p class="text-xs text-gray-500">created: ${data[i].fields.date}</p>
+            </div>
+          </div>
+        `;
+        $('.content').html(content);
+      }
+    })
+  })
+</script>
+{% endblock meta %}
+
 {% block content %}
-<!-- <style>
-  *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-  }
-  section{
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    padding: 100px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-  }
-  header{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 100px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  header ul{
-    position: relative;
-    display: flex;
-  }
-  header ul li{
-    list-style: none;
-  }
-  header ul li a{
-    display: inline-block;
-    color: #333;
-    font-weight: 400;
-    margin-left: 40px;
-    text-decoration: none;
-  }
-  .content{
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .content .textBox{
-    position: relative;
-    max-width: 600px;
-  }
-  .content .textBox h2{
-    color: #333;
-    font-size: 4em;
-    line-height: 1.4em;
-    font-weight: 500;
-  }
-  .content .textBox p{
-    color: #333;
-    font-size: 4em;
-    line-height: 1.4em;
-    font-weight: 500;
-  }
-  .circle{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgb(5, 182, 70);
-    clip-path: circle(600px at right 800px);
-  }
-</style> -->
-<!-- <nav class="navbar bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'nobokek:show_nobokek' %}">NoBokek App</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'add:show_add' %}">Add Income/Outcome</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Statistik Income/Outcome</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Report User Info</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Forum</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'nobokek:logout' %}">
-              <button class="btn btn-outline-success bg-danger" type="button" href="{% url 'nobokek:logout' %}">
-                  Logout
-              </button>
-            </a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
 
-<div class="card mx-auto" style="width: 30rem;">
-    <div class="card-body">
-        <p>
-            NoBokek ini dibuat untuk membantu mempermudah pengelolaan keuangan pengguna atau user khususnya bagi mahasiswa. Pada NoBokek, pengguna dapat mencatat pengeluaran serta pendapatan kemudian melihat perkembangannya perminggu dengan penyajian yang menarik dan mudah dimengerti. NoBokek ini juga menyediakan info terkini mengenai hal-hal yang terkait dengan dunia ekonomi dan finansial. Terdapat juga forum untuk pengguna melakukan posting.
-        </p>
-    </div>
-  </div> 
-
-
-<h5>Berita Terkini</h5>
-<div class="card">
-    <div class="card-body">
-        <button class="btn btn-outline-success" type="button">
-            <a href="https://republika.co.id/berita/rkdt6h5125000/menjaga-stabilitas-sistem-keuangan" target="_blank">Menjaga Stabilitas Sistem Keuangan</a>
-        </button>
-    </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <button class="btn btn-outline-success" type="button">
-            <a href="https://www.idntimes.com/business/economy/hana-adi-perdana-1/tips-menjaga-stabilitas-keuangan-di-tengan-ancaman-resesi-global" target="_blank">Tips Menjaga Stabilitas Keuangan di Tengan Ancaman Resesi</a>
-        </button>
-    </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <button class="btn btn-outline-success" type="button">
-            <a href="https://konstruksimedia.com/tips-siapkan-keuangan-lebih-aman-tangkal-resesi-global/" target="_blank">Tips Siapkan Keuangan Lebih Aman Tangkal Resesi Global</a>
-        </button>
-    </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <button class="btn btn-outline-success" type="button">
-            <a href="https://www.republika.co.id/berita/rk9lrb349/tips-belajar-mengatur-keuangan-saat-ancaman-resesi-ekonomi" target="_blank">Tips Belajar Mengatur Keuangan Saat Ancaman Resesi Ekonomi</a>
-        </button>
-    </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <button class="btn btn-outline-success" type="button">
-            <a href="https://finansial.bisnis.com/read/20221023/55/1590340/simak-7-tips-cerdas-atur-uang-agar-financial-freedom-tercapai" target="_blank">Simak 7 Tips Cerdas Atur Uang Agar Financial Freedom Tercapai</a>
-        </button>
-    </div>
-</div> -->
-<!-- <section>
-  <div class="circle"></div>
-  <header>
-    <h1>NoBokek App</h1>
-    <ul>
-      <li><a href="#">Add Income/Outcome</a></li>
-      <li><a href="#">Statistik Income/Outcome</a></li>
-      <li><a href="#">Report User Info</a></li>
-      <li><a href="#">Forum</a></li>
-    </ul>
-  </header>
-  <div class="content">
-    <div class="textBox">
-      <h2>Let's Track Your Money!</h2>
-      <p> NoBokek ini dibuat untuk membantu mempermudah pengelolaan keuangan pengguna atau user khususnya bagi mahasiswa. Pada NoBokek, pengguna dapat mencatat pengeluaran serta pendapatan kemudian melihat perkembangannya perminggu dengan penyajian yang menarik dan mudah dimengerti. NoBokek ini juga menyediakan info terkini mengenai hal-hal yang terkait dengan dunia ekonomi dan finansial. Terdapat juga forum untuk pengguna melakukan posting.</p>
-    </div>
-    <div class="imgBox">
-      <img src="img1.png" class="starbucks">
-    </div>
-  </div>
-</section> -->
 <style>
   *{
     margin: 0;
@@ -201,6 +52,7 @@
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    background: #75c9b7;
     
   }
    header .logo{
@@ -229,10 +81,25 @@
     font-size: 1em;
     padding: 6px 15px;
     color: #ffe26a;
+    font-weight: 700;
+  }
+  header ul li button{
+    position: relative;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 6px 15px;
+    color: #ffe26a;
+    font-weight: 700;
   }
   header ul li a:hover{
     background: #ffe26a;
     color: #abd699;
+    border-radius: 20px;
+  }
+
+  header ul li a.logout{
+    background: #d80000;
+    color: #ffffff;
     border-radius: 20px;
   }
   header .search{
@@ -250,7 +117,7 @@
     width: 100%;
     height: 100%;
     display: flex;
-    background: #fff;
+    background: #75c9b7;
     align-items: center;
     padding: 0 30px;
     transition: 0.5s ease-in-out;
@@ -293,7 +160,7 @@
     position: relative;
     display: none;
   }
-  @media (max-width: 1000px){
+  @media (max-width: 1200px){
     .searchBtn{
       left: 0;
     }
@@ -318,9 +185,9 @@
       left: 0;
       display: flex;
       flex-direction: column;
-      background: #fff;
+      background: #75c9b7;
       width: 100%;
-      height: calc(60vh - 80px);
+      height: calc(70vh - 80px);
       padding: 40px;
       border-top: 1px solid rgba(0, 0, 0, 0.5);
       transition: 0.5s;
@@ -392,11 +259,12 @@
   <div class="group">
     
     <ul class="navigation">
-      <li><a href="{% url 'nobokek:show_nobokek' %}">Home</a></li>
       <li><a href="{% url 'add:show_add' %}">Add</a></li>
       <li><a href="#">Statistic</a></li>
       <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
       <li><a href="#">Forum</a></li>
+      <li><a class="contact-us bg-green-700">Contact Us</a></li>      
+      <li><a href="{% url 'nobokek:logout' %}" class="logout">Logout</a></li>
     </ul>
     <div class="search">
       <span class="icon">
@@ -411,44 +279,123 @@
   </div>
   
 </header>
-<script>
-  let searchBtn = document.querySelector('.searchBtn');
-  let closeBtn = document.querySelector('.closeBtn');
-  let searchBox = document.querySelector('.searchBox');
-  let navigation = document.querySelector('.navigation');
-  let menuToggle = document.querySelector('.menuToggle');
-  let header = document.querySelector('header');
-
-  searchBtn.onclick = function(){
-    searchBox.classList.add('active');
-    closeBtn.classList.add('active');
-    searchBtn.classList.add('active');
-    menuToggle.classList.add('hide');
-    header.classList.remove('open');
-  }
-  closeBtn.onclick = function(){
-    searchBox.classList.remove('active');
-    closeBtn.classList.remove('active');
-    searchBtn.classList.remove('active');
-    menuToggle.classList.remove('hide');
-  }
-  menuToggle.onclick = function(){
-    header.classList.toggle('open');
-    searchBox.classList.remove('active');
-    closeBtn.classList.remove('active');
-    searchBtn.classList.remove('active');
-  }
- 
-</script>
 
 <section>
   <h2 id="text">Let's Track Your Money</h2>
-  <a href="{% url 'nobokek:logout' %}" id="btn">Logout</a>
+  <a href="#" id="btn">Learn More</a>
 </section>
 <div class="sec">
   <h2>About us</h2>
   <p>NoBokek ini dibuat untuk membantu mempermudah pengelolaan keuangan pengguna atau user khususnya bagi mahasiswa. Pengguna dapat mencatat pengeluaran serta pendapatan kemudian melihat perkembangannya perminggu dengan penyajian yang menarik dan mudah dimengerti. NoBokek juga menyediakan info terkini mengenai hal-hal yang terkait dengan dunia ekonomi dan finansial. Terdapat juga forum untuk pengguna melakukan posting.</p>
 </div>
+
+  <!-- backdrop modals -->
+  <div class="backdrop mt-14 h-[100vh] w-[100vw] bg-red-100 z-10 opacity-80"></div>
+
+  <!-- modals -->
+  <div class="modal absolute flex flex-col justify-center items-center z-20 w-[30rem] h-[20rem] bg-gray-100 outline-2 shadow-2xl rounded-xl hover:scale-105 duration-150">
+    {% csrf_token %}
+    <h1 class="text-2xl font-bold mb-4">Contact Us</h1>
+    <div class="flex flex-col m-1">
+      <label class="font-semibold">Full Name</label>
+      <input class="name w-[17rem] p-2 rounded-lg border-[1px] border-black" placeholder="Your Full Name" required>
+    </div>
+    <div class="flex flex-col m-1">
+      <label class="font-semibold">Email</label>
+      <input class="email w-[17rem] p-2 rounded-lg border-[1px] border-black" placeholder="Your Email Here" required>
+    </div>
+    <div class="flex flex-col m-1">
+      <label class="font-semibold">Problem</label>
+      <input class="problem w-[17rem] p-2 rounded-lg border-[1px] border-black" placeholder="Your Problem Here" required>
+    </div>
+    <button class="send-now-button m-3 bg-green-500 hover:bg-green-700 hover:cursor-pointer px-6 py-2 rounded-lg">Send Now</button>
+  </div>
+
+  <script>
+    let searchBtn = document.querySelector('.searchBtn');
+    let closeBtn = document.querySelector('.closeBtn');
+    let searchBox = document.querySelector('.searchBox');
+    let navigation = document.querySelector('.navigation');
+    let menuToggle = document.querySelector('.menuToggle');
+    let header = document.querySelector('header');
+  
+    searchBtn.onclick = function(){
+      searchBox.classList.add('active');
+      closeBtn.classList.add('active');
+      searchBtn.classList.add('active');
+      menuToggle.classList.add('hide');
+      header.classList.remove('open');
+    }
+    closeBtn.onclick = function(){
+      searchBox.classList.remove('active');
+      closeBtn.classList.remove('active');
+      searchBtn.classList.remove('active');
+      menuToggle.classList.remove('hide');
+    }
+    menuToggle.onclick = function(){
+      header.classList.toggle('open');
+      searchBox.classList.remove('active');
+      closeBtn.classList.remove('active');
+      searchBtn.classList.remove('active');
+    }
+   
+  </script>
+<!-- click add task button -->
+<script>
+  $(document).ready( function(){
+    $('.contact-us').click( function(){
+      $('.modal').toggle();
+      $('.backdrop').toggle();
+    })
+  })
+</script>
+
+<!-- click add task button in modal -->
+<script>
+  $(document).ready( function(){
+    $('.send-now-button').click( function(){
+      let name = $('.name').val();
+      let email = $('.email').val();
+      let problem = $('.problem').val();
+      let CSRFtoken = $('input[name="csrfmiddlewaretoken"]').val();
+      $.post('/nobokek/contact/', {
+        nama: name,
+        alamat: email,
+        masalah: problem,
+        csrfmiddlewaretoken: CSRFtoken
+      }, function(){
+        $('.modal').hide();
+        $('.backdrop').hide();
+        $.get('/nobokek/json/', function(data, status){
+          let content = '';
+          for (let i=0; i<data.length; i++){
+            content += `
+              <div class="text-white hover:scale-105 duration-150 flex flex-row justify-between p-3 lg:w-[30rem] sm:w-[25rem] h-24 bg-zinc-800 box-shadow-md rounded-xl">
+                  <div>
+                  <h2 class="font-semibold lg:text-md sm:text-sm">${data[i].fields.nama}</h2>
+                  <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.alamat}</h3>
+                  <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.masalah}</h3>
+                  <p class="text-xs text-gray-500">created: ${data[i].fields.date}</p>
+                </div>
+              </div>
+            `;
+            $('.content').html(content);
+          }
+        })
+      })
+    })
+  })
+</script>
+
+<!-- click modals backdrop -->
+<script>
+  $(document).ready( function(){
+    $('.backdrop').click( function(){
+      $('.modal').hide();
+      $('.backdrop').hide();
+    })
+  })
+</script>
 
 
 {% endblock content %}
