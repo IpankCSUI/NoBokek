@@ -12,7 +12,7 @@ Pemrograman Berbasis Platform (CSGE602022) - diselenggarakan oleh Fakultas Ilmu 
 5. Irfan Satya Hendrasto (2106751682)
 
 ## Tautan Aplikasi Heroku 🔗
-[NoBokek App](https://nobokek.herokuapp.com/)
+[NoBokek App](https://nobokek.herokuapp.com/nobokek)
 
 ## Cerita aplikasi yang diajukan serta manfaatnya 📖
 Website ini dibuat untuk membantu mempermudah pengelolaan keuangan pengguna atau user khususnya bagi mahasiswa. Pada website ini, pengguna dapat mencatat pengeluaran serta pendapatan kemudian melihat perkembangannya perminggu dengan penyajian yang menarik dan mudah dimengerti. Website ini juga menyediakan info terkini mengenai hal-hal yang terkait dengan dunia ekonomi dan finansial. Terdapat juga forum untuk pengguna melakukan posting.
