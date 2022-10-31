@@ -22,19 +22,19 @@ def show_json(request):
     money = Stat.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize('json', money), content_type='application/json')
 
-def show_something(request: HttpRequest):
-    if request.method == "POST":
-        form = (request.POST)
-        if form.is_valid():
-            task = Stat(
-                date=str(datetime.datetime.now().date()),
-                income=form.cleaned_data["income"],
-                outcome=form.cleaned_data["outcome"],
-                user=request.user,
-            )
-            task.save()
-            messages.success(request, "Saved success!")
-            return redirect("nobokek:show_nobokek")
-    form = Stat()
-    context = {"form": form}
-    return render(request, "", context)
+# def show_something(request: HttpRequest):
+#     if request.method == "POST":
+#         form = (request.POST)
+#         if form.is_valid():
+#             task = Stat(
+#                 date=str(datetime.datetime.now().date()),
+#                 income=form.cleaned_data["income"],
+#                 outcome=form.cleaned_data["outcome"],
+#                 user=request.user,
+#             )
+#             task.save()
+#             messages.success(request, "Saved success!")
+#             return redirect("nobokek:show_nobokek")
+#     form = Stat()
+#     context = {"form": form}
+#     return render(request, "", context)
