@@ -8,5 +8,6 @@ urlpatterns = [
     path('', show_add, name = "show_add"),
     path('json/',show_json,name="show_json"),
     path('addincome/', add_income, name='add_income'),
-    path('addoutcome/', add_outcome, name='add_outcome')
+    path('addoutcome/', add_outcome, name='add_outcome'),
+    path('addnote/', add_note , name='add_note'),
 ]
