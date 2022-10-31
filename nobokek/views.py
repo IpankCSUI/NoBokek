@@ -1,14 +1,20 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
+from django.http import HttpRequest
 from django.urls import reverse
 from nobokek.models import BarangWishlist
+from nobokek.forms import Stat
+from nobokek.models import ContactUs
+from django.http import HttpResponse
+from django.core import serializers
+from datetime import datetime 
 ...
 ...
 @login_required(login_url='/nobokek/login/')
@@ -61,3 +67,30 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('nobokek:login'))
     response.delete_cookie('last_login')
     return response
+
+@login_required(login_url="/nobokek/login")
+def create_task(request):
+    if request.method == "POST":
+        name = request.POST.get('nama')
+        email = request.POST.get('alamat')
+        problem = request.POST.get('masalah')
+
+        new_task = ContactUs(user=request.user, nama=name, alamat=email, masalah=problem, date=datetime.now())
+        new_task.save()
+        return redirect("nobokek:show_nobokek")
+    return render(request, "contact.html")
+
+@login_required(login_url="/nobokek/login")
+def show_nobokek_json(request):
+    tasks = ContactUs.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', tasks), content_type='application/json')
+
+def add_task(request):
+    if request.method == "POST":
+        name = request.POST.get('nama')
+        email = request.POST.get('alamat')
+        problem = request.POST.get('masalah')
+
+        new_task = ContactUs(user=request.user, nama=name, alamat=email, masalah=problem, date=datetime.now())
+        new_task.save()
+    return HttpResponse('')
