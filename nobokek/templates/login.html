@@ -2,18 +2,15 @@
 
 {% block meta %}
 <title>Login</title>
-<nav class="navbar bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand">NoBokek App</a>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-</nav>
 {% endblock meta %}
 
 {% block content %}
+<style>
+    body{
+      min-height: 100vh;
+      background: #abd699;
+    }
+  </style>
 <div class="card mx-auto text-center" style="width: 20rem;">
   <div class="card-body">
     <div class = "login">
@@ -38,7 +35,7 @@
 
                 </tr>
             </table>
-            <button class="btn btn-outline-success" type="submit">Login</button>
+            <button class="btn bg-primary" type="submit">Login</button>
         </form>
     
         {% if messages %}
@@ -49,7 +46,11 @@
             </ul>
         {% endif %}     
         <div>
-            <a href="{% url 'nobokek:guest' %}"> Log in as guest </a>
+            <a href="{% url 'nobokek:show_guest' %}">
+                <button class="btn btn-outline-success" type="button">
+                    Log in as a guest
+                </button>
+              </a>
         </div>
         <div>
             Belum mempunyai akun? <a href="{% url 'nobokek:register' %}">Buat Akun</a>
