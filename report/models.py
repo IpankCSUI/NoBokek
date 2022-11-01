@@ -1,8 +1,19 @@
 from django.db import models
 
+from django.contrib.auth.models import User
+import datetime
+from add.models import Money
+
 # Create your models here.
 
-class BarangWishlist(models.Model):
-    nama_barang = models.CharField(max_length=50)
-    harga_barang = models.IntegerField()
-    deskripsi = models.TextField()
+class ReportUser(models.Model):
+    # userAdd = models.ForeignKey(Money, on_delete=models.PROTECT, unique=True, null=True)
+    userAdd = models.ManyToManyField(Money, blank=True)
+
+
+class Pesan(models.Model):
+    nama = models.CharField(max_length=15)
+    isi = models.TextField(max_length=150)
+
+    def __str__(self):
+        return self.nama
