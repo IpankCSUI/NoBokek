@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from .models import *
 from .forms import *
 from django.shortcuts import render

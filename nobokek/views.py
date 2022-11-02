@@ -70,6 +70,7 @@ def show_json(request):
     return HttpResponse(serializers.serialize('json', problem), content_type='application/json')
 
 def create_problem(request):
+    form = ContactForm()
     if request.method == 'POST':
         nama = request.POST.get('nama')
         alamat = request.POST.get('alamat')
@@ -77,18 +78,16 @@ def create_problem(request):
         date = datetime.date.today()
         user = request.user
         problem_obj = ContactUs.objects.create(nama=nama, alamat=alamat, masalah=masalah, date=date, user=user)
-        form = ContactForm()
-
         result = {
             'fields':{
                 'nama':problem_obj.nama,
                 'alamat':problem_obj.alamat,
                 'masalah':problem_obj.masalah,
                 'date':problem_obj.date,
-                'user':problem_obj.user,
+                'user':problem_obj.user.username,
             },
             'pk':problem_obj.pk
         }
         return JsonResponse(result)
-    # return render(request, 'contact.html', {'form': form, 'result': result})
+    return render(request, 'contact.html', {'form': form})
 
