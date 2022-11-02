@@ -24,6 +24,7 @@ def show_json(request):
     money = Money.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize('json', money), content_type='application/json')
 
+@login_required(login_url='/nobokek/login/')
 @csrf_exempt
 def add_income(request):
     if request.method == 'POST':
@@ -67,6 +68,7 @@ def add_income(request):
 #         }
 #         return JsonResponse(result)
 
+@login_required(login_url='/nobokek/login/')
 @csrf_exempt
 def add_outcome(request):
     if request.method == 'POST':
@@ -91,6 +93,7 @@ def add_outcome(request):
         }
         return JsonResponse(result)
 
+@login_required(login_url='/nobokek/login/')
 @csrf_exempt
 def add_note(request):
     if request.method == 'POST':
@@ -105,3 +108,10 @@ def add_note(request):
             'pk':new_note.pk
         }
         return JsonResponse(result)
+
+@login_required(login_url='/login/')
+@csrf_exempt
+def delete_note(request, id):
+    if (request.method == 'DELETE'):
+        Money.objects.filter(id=id).delete()
+        return HttpResponse(status=202)

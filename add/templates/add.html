@@ -8,9 +8,18 @@
 
  <style>
   body {
-    background : #FFFFFF
+    background : #FFFFFF;
+    padding: 100px 0;
     /* background: rgb(117,201,183); */
     /* background: linear-gradient(90deg, rgba(117,201,183,1) 0%, rgba(171,214,153,1) 50%); */
+  }
+
+  .grid-container {
+  
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 16px;
+    padding: 16px;
   }
 
 /* CSS */
@@ -292,7 +301,6 @@ header{
     }
   }
 
-
   </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -310,42 +318,71 @@ $(document).ready(function(){
     //   $(".grid-container").append(`
     //         <p> ${res_in} </p>
     //         <p> ${res_out} </p> `)
-
+    $(".grid-container").empty();
       for (i=0;i<data.length;i++){
       if(data[i].fields.note != null ){
-        $(".grid-container").append(`<div class="card text-bg-primary mb-3" style="max-width: 18rem;">
+        $(".grid-container").append(`<div class="card text-bg-primary mb-3" style="max-width: 18rem;" id="card-${data[i].pk}">
         <div class="card-body">
           <p class="card-text">${data[i].fields.note}</p>
+          <button type="button" class="btn btn-secondary" onclick="delete_note(${data[i].pk})">Delete</button>
         </div>`)
+        
       }
       }
 
       });
     }
 
+  // $("#addin").click(function(){
+  //   $.post("/add/addincome/", {
+  //     income : $('#field_income').val(),
+  //     desc_in : $("#field_desc_in").val(),
+  //   },
+  //   function (result) {
+  //     alert("Okay! Your income has been noted :)")
+  //     $('#field_income').val(''),
+  //     $("#field_desc_in").val(''),
+  //     refresh();
+  //   }
+  //   ) 
+  // })
+
   $("#addin").click(function(){
     $.post("/add/addincome/", {
-      income : $('#field_income').val(),
-      desc_in : $("#field_desc_in").val(),
+      income : $('#income').val(),
+      desc_in : $("#desc_in").val(),
     },
     function (result) {
       alert("Okay! Your income has been noted :)")
-      $('#field_income').val(''),
-      $("#field_desc_in").val(''),
+      $('#income').val(''),
+      $("#desc_in").val(''),
       refresh();
     }
     ) 
   })
+  // $("#addout").click(function(){
+  //   $.post("/add/addoutcome/", {
+  //     outcome : $('#field_outcome').val(),
+  //     desc_out : $('field_desc_out').val(),
+  // },
+  //   function (result) {
+  //     alert("Okay! Your outcome has been noted :)")
+  //     $('#field_outcome').val(''),
+  //     $("#field_desc_out").val(''),
+  //     refresh();
+  //   }
+  //   ) 
+  // })
 
   $("#addout").click(function(){
     $.post("/add/addoutcome/", {
-      outcome : $('#field_outcome').val(),
-      desc_out : $('field_desc_out').val(),
+      outcome : $('#outcome').val(),
+      desc_out : $('#desc_out').val(),
   },
     function (result) {
       alert("Okay! Your outcome has been noted :)")
-      $('#field_outcome').val(''),
-      $("#field_desc_out").val(''),
+      $('#outcome').val(''),
+      $("#income").val(''),
       refresh();
     }
     ) 
@@ -364,7 +401,23 @@ $(document).ready(function(){
     ) 
   })
   refresh();
+
+  
 });
+function delete_note(id){
+  const deleteURL = '/add/deletenote/' + id;
+  $.ajax({
+      url: deleteURL,
+      type: 'DELETE',
+      success: function(response){
+        
+        $(`#card-${id}`).remove()
+      }
+    })
+}
+
+
+
 
 </script>
 
@@ -432,11 +485,13 @@ $(document).ready(function(){
           <form>
             <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Nominal:</label>
-                <input type="number" min="0" class="form-control" id="field_income">
+                <!-- <input type="number" min="0" class="form-control" id="field_income"> -->
+                {{form.income}}
             </div>
             <div class="mb-3">
                 <label for="message-text" class="col-form-label">Description:</label>
-                <textarea class="form-control" id="field_desc_in"></textarea>
+                <!-- <textarea class="form-control" id="field_desc_in"></textarea> -->
+                {{form.desc_in}}
             </div>
           </form>
         </div>
@@ -459,11 +514,13 @@ $(document).ready(function(){
           <form>
             <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Nominal:</label>
-                <input type="number" min="0" class="form-control" id="field_outcome">
+                <!-- <input type="number" min="0" class="form-control" id="field_outcome"> -->
+                {{form.outcome}}
             </div>
             <div class="mb-3">
                 <label for="message-text" class="col-form-label">Description:</label>
-                <textarea class="form-control" id="field_desc_out"></textarea>
+                <!-- <textarea class="form-control" id="field_desc_out"></textarea> -->
+                {{form.desc_out}}
             </div>
           </form>
         </div>
@@ -505,6 +562,7 @@ $(document).ready(function(){
 
   {% comment %} Add the data below this line {% endcomment %}
   <div class = "grid-container">
+    
   </div>
 
   </div>
