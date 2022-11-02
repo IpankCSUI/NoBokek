@@ -340,7 +340,7 @@ $(document).ready(function(){
   $("#addout").click(function(){
     $.post("/add/addoutcome/", {
       outcome : $('#field_outcome').val(),
-      desc_out : $('field_desc_out').val(),
+      desc_out : $('#field_desc_out').val(),
   },
     function (result) {
       alert("Okay! Your outcome has been noted :)")
