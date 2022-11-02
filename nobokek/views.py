@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
+from nobokek.forms import ContactForm
 from nobokek.models import ContactUs
 from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
@@ -76,6 +77,7 @@ def create_problem(request):
         date = datetime.date.today()
         user = request.user
         problem_obj = ContactUs.objects.create(nama=nama, alamat=alamat, masalah=masalah, date=date, user=user)
+        form = ContactForm()
 
         result = {
             'fields':{
@@ -88,4 +90,4 @@ def create_problem(request):
             'pk':problem_obj.pk
         }
         return JsonResponse(result)
-    # return render(request, 'contact.html')
+    # return render(request, 'contact.html', {'form': form, 'result': result})
