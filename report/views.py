@@ -20,6 +20,7 @@ def show_report(request):
     transactionUser = Money.objects.all()
     response = {
         'transactionUser': transactionUser,
+        'userName': request.user,
         
     }
     return render(request, 'report.html', response)
@@ -28,6 +29,7 @@ def show_target(request):
     targetUser = Target.objects.filter(user=request.user)
     response = {
         'targetUser': targetUser,
+        'userName': request.user,
         
     }
     return render(request, 'target.html', response)
