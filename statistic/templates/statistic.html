@@ -310,64 +310,70 @@
 <!--Akhir code navbar-->
 
 <!--Code for statistic-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js'></script>
 <script>
     $(document).ready(function(){
-        show_statistic();
-    });
-    function show_report(){
-        let report = "";
-        let report1 ="";
         $.ajax({
             url: "{% url 'add:show_json' %}",
             type: 'GET',
-            dataType:"json",
             success: function(data){
-                let incomeUser = 0;
-                let outcomeUser = 0;
+                console.log(data)
+                let inWeek1 = 0;
+                let inWeek2 = 0;
+                let inWeek3 = 0;
+                let inWeek4 = 0;
+                let outWeek1 = 0;
+                let outWeek2 = 0;
+                let outWeek3 = 0;
+                let outWeek4 = 0;
                 for(i of data){
-                    if(i.fields.date.day)
-                        incomeUser += i.fields.income
-                        outcomeUser += i.fields.outcome
+                    console.log(i.fields.outcome)
+                    if(0 < parseInt(i.fields.date[8]+i.fields.date[9]) && parseInt(i.fields.date[8]+i.fields.date[9]) < 8){
+                        inWeek1 += i.fields.income
+                        outWeek1 += i.fields.outcome
+                    }
+                    if(7 < parseInt(i.fields.date[8]+i.fields.date[9]) && parseInt(i.fields.date[8]+i.fields.date[9]) < 15){
+                        inWeek2 += i.fields.income
+                        outWeek2 += i.fields.outcome
+                    }
+                    if(14 < parseInt(i.fields.date[8]+i.fields.date[9]) && parseInt(i.fields.date[8]+i.fields.date[9]) < 22){
+                        inWeek3 += i.fields.income
+                        outWeek3 += i.fields.outcome
+                    }
+                    if(21 < parseInt(i.fields.date[8]+i.fields.date[9]) && parseInt(i.fields.date[8]+i.fields.date[9]) < 29){
+                        inWeek4 += i.fields.income
+                        outWeek4 += i.fields.outcome
+                    }
                 }
-                report += `<h3 class="danaTerkumpul center mb-5">Rp${incomeUser}</h3>`
-                $('#totalIncome').html(report)
-                
-                report1 += `<h3 class="danaTerkumpul center mb-5">Rp${outcomeUser}</h3>`
-                $('#totalOutcome').html(report1)
+                var ctx = $("#chart-line")
+                var myLineChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Minggu-1", "Minggu-2", "Minggu-3", "Minggu-4"],
+                        datasets: [{
+                            data: [inWeek1, inWeek2, inWeek3, inWeek4],
+                            label: "Income",
+                            borderColor: "#458af7",
+                            backgroundColor:'#458af7',
+                            fill: false
+                        }, {
+                            data: [outWeek1, outWeek2, outWeek3, outWeek4],
+                            label: "Outcome",
+                            borderColor: "#8e5ea2",
+                            fill: false,
+                            backgroundColor:'#8e5ea2'
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Your statistic per month',
+                        }
+                    }
+                })
             },
-            error: function(data){
-                console.log("Error")
-            }
         })
-    }
-    $(document).ready(function() {
-        var ctx = $("#chart-line");
-        var myLineChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Minggu-1", "Minggu-2", "Minggu-3", "Minggu-4"],
-                datasets: [{
-                    data: [86, 114, 106, 106],
-                    label: "Income",
-                    borderColor: "#458af7",
-                    backgroundColor:'#458af7',
-                    fill: false
-                }, {
-                    data: [282, 350, 411, 502],
-                    label: "Outcome",
-                    borderColor: "#8e5ea2",
-                    fill: true,
-                    backgroundColor:'#8e5ea2'
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: 'Your statistic per month',
-                }
-            }
-        });
     });
 </script>
 
