@@ -10,4 +10,5 @@ urlpatterns = [
     path('addincome/', add_income, name='add_income'),
     path('addoutcome/', add_outcome, name='add_outcome'),
     path('addnote/', add_note , name='add_note'),
+    path('deletenote/<int:id>/', delete_note, name='delete_note'),
 ]

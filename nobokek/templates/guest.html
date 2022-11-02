@@ -283,14 +283,14 @@
 </style>
 
 <header class="fixed-top">
-  <a href="#" class="logo">NoBokek App</a>
+  <a href="{% url 'nobokeke:show_guest' %}" class="logo">NoBokek App</a>
   <div class="group">
     
     <ul class="navigation">
       <li><a href="{% url 'add:show_add' %}">Add</a></li>
       <li><a href="#">Statistic</a></li>
       <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
-      <li><a href="#">Forum</a></li>
+      <li><a href="{% url 'show_forum' %}">Forum</a></li>
       <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
       <li><a href="{% url 'nobokek:login' %}" class="login">Login</a></li>
     </ul>
@@ -305,7 +305,6 @@
   <div class="searchBox">
     <input type="text" placeholder="Search here...">
   </div>
-  
 </header>
 
 <section>
