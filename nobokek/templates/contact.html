@@ -210,9 +210,11 @@
   $(document).ready(function(){
       function refresh() {
       $.get("/nobokek/json", function(data) {
+        $(".grid-container").empty();
         for (i=0;i<data.length;i++){
           $(".grid-container").append(`<div class="card text-bg-primary mb-3" style="max-width: 18rem;">
           <div class="card-body">
+            
             <p class="card-text">${data[i].fields.nama}</p>
             <p class="card-text">${data[i].fields.alamat}</p>
             <p class="card-text">${data[i].fields.masalah}</p>
@@ -220,25 +222,28 @@
         }
         });
       }
-  
-    $("#sendProblem").click(function(){
-      $.post("/nobokek/create_problem/", {
-        nama : $('#nama').val(),
-        alamat : $("#alamat").val(),
-        masalah : $("#masalah").val(),
-      },
-      function (result) {
+      
+    $("#send").click(function(){
+      $.ajax({
+        url:"/nobokek/create_problem/",
+        type:"POST",
+        dataType: "json",
+        data:{
+          nama : $('#nama').val(),
+          alamat : $("#alamat").val(),
+          masalah : $("#masalah").val(),
+          csrfmiddlewaretoken: "{{ csrf_token }}"
+        },
+        success: function (result) {
         alert("Okay! Your problem has been sent :)")
-        $('#nama').val(''),
-        $("#alamat").val(''),
-        $("#masalah").val(''),
         refresh();
+      },
+      error: function(){
+        alert("Error")
       }
-      ) 
-    })
+      })})
     refresh();
   });
-  
   </script>
 
 <center>
@@ -278,7 +283,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="sendProblem" data-bs-dismiss="modal">Send</button>
+        <button type="button" class="btn btn-primary" id="send" data-bs-dismiss="modal">Send</button>
       </div>
     </div>
   </div>
