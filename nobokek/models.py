@@ -1,3 +1,5 @@
+from datetime import datetime
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -6,4 +8,17 @@ from django.contrib.auth.models import User
 class BarangWishlist(models.Model):
     nama_barang = models.CharField(max_length=50)
     harga_barang = models.IntegerField()
+<<<<<<< HEAD
     deskripsi = models.TextField()
+=======
+    deskripsi = models.TextField()
+    date = models.DateField(default=datetime.now)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+
+class ContactUs(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField(default=datetime.now)
+    nama = models.CharField(max_length=150)
+    alamat = models.EmailField()
+    masalah =models.CharField(max_length=1000)
+>>>>>>> 0a561e346b23ab42f417b0bca6073ee283eed7ee
