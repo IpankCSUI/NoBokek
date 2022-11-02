@@ -1,10 +1,26 @@
 from django import forms
+from nobokek.models import ContactUs
 
-class Stat(forms.Form):
-    harga_barang = forms.CharField(label='Title')
-    date = forms.DateField()
+class ContactForm(forms.ModelForm):
+    nama = forms.TextInput()
+    alamat = forms.TextInput()
+    masalah = forms.Textarea()
 
-class ContactForm(forms.Form):
-    nama = forms.CharField(label="Nama", max_length=150)
-    email = forms.EmailField(label="Email", widget=forms.Textarea)
-    masalah = forms.CharField(label="Masalah", max_length=1000)
+    class Meta:
+        model = ContactUs
+        fields = [
+            "nama",
+            "alamat",
+            "masalah"
+        ]
+        widgets = {
+           'nama' : forms.TextInput(attrs={
+            'id':'nama'
+           }),
+           'alamat' : forms.TextInput(attrs={
+            'id':'alamat'
+           }),
+           'masalah' : forms.Textarea(attrs={
+            'id':'masalah'
+           }),
+        }

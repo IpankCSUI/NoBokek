@@ -290,8 +290,10 @@
       <li><a href="{% url 'add:show_add' %}">Add</a></li>
       <li><a href="{% url 'statistic:show_statistic' %}">Statistic</a></li>
       <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
+
       <li><a href="{% url 'button' %}">Forum</a></li>
       <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
+
       <li><a href="{% url 'nobokek:logout' %}" class="logout">Logout</a></li>
     </ul>
     <div class="search">
@@ -452,62 +454,4 @@
     }
    
   </script>
-<!-- click add task button -->
-<script>
-  $(document).ready( function(){
-    $('.contact-us').click( function(){
-      $('.modal').toggle();
-      $('.backdrop').toggle();
-    })
-  })
-</script>
-
-<!-- click add task button in modal -->
-<script>
-  $(document).ready( function(){
-    $('.send-now-button').click( function(){
-      let name = $('.name').val();
-      let email = $('.email').val();
-      let problem = $('.problem').val();
-      let CSRFtoken = $('input[name="csrfmiddlewaretoken"]').val();
-      $.post('/nobokek/contact/', {
-        nama: name,
-        alamat: email,
-        masalah: problem,
-        csrfmiddlewaretoken: CSRFtoken
-      }, function(){
-        $('.modal').hide();
-        $('.backdrop').hide();
-        $.get('/nobokek/json/', function(data, status){
-          let content = '';
-          for (let i=0; i<data.length; i++){
-            content += `
-              <div class="text-white hover:scale-105 duration-150 flex flex-row justify-between p-3 lg:w-[30rem] sm:w-[25rem] h-24 bg-zinc-800 box-shadow-md rounded-xl">
-                  <div>
-                  <h2 class="font-semibold lg:text-md sm:text-sm">${data[i].fields.nama}</h2>
-                  <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.alamat}</h3>
-                  <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.masalah}</h3>
-                  <p class="text-xs text-gray-500">created: ${data[i].fields.date}</p>
-                </div>
-              </div>
-            `;
-            $('.content').html(content);
-          }
-        })
-      })
-    })
-  })
-</script>
-
-<!-- click modals backdrop -->
-<script>
-  $(document).ready( function(){
-    $('.backdrop').click( function(){
-      $('.modal').hide();
-      $('.backdrop').hide();
-    })
-  })
-</script>
-
-
 {% endblock content %}
