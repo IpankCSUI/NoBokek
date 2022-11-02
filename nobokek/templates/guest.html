@@ -199,23 +199,10 @@
 
 <header>
   <a href="#" class="logo">NoBokek App</a>
-  <div class="group">
-    
-    <ul class="navigation">
-      <li><a href="{% url 'nobokek:show_guest' %}">Home</a></li>
-      <li><a href="#">Forum</a></li>
-    </ul>
-    <div class="search">
-      <span class="icon">
-        <ion-icon name="search-outline" class="searchBtn"></ion-icon>
-        <ion-icon name="close-outline" class="closeBtn"></ion-icon>
-      </span>
-    </div>
-    <ion-icon name="menu-outline" class="menuToggle"></ion-icon>
-  </div>
-  <div class="searchBox">
-    <input type="text" placeholder="Search here...">
-  </div>
+  <ul>
+    <li><a href="{% url 'nobokek:show_guest' %}">Home</a></li>
+    <li><a href="{% url 'show_forum' %}">Forum</a></li>
+  </ul>
 </header>
 <script>
   let searchBtn = document.querySelector('.searchBtn');

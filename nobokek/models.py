@@ -18,3 +18,4 @@ class ContactUs(models.Model):
     nama = models.CharField(max_length=150)
     alamat = models.EmailField()
     masalah =models.CharField(max_length=1000)
+
