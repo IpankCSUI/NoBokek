@@ -25,5 +25,5 @@ urlpatterns = [
     path('add/', include('add.urls')),
     path('report/', include('report.urls')),
     path('forum/', include('forum.urls')),
-
+    path('statistic/', include('statistic.urls')),
 ]

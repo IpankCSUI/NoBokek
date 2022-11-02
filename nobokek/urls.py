@@ -5,6 +5,7 @@ from nobokek.views import login_user #sesuaikan dengan nama fungsi yang dibuat
 from nobokek.views import logout_user #sesuaikan dengan nama fungsi yang dibuat
 from nobokek.views import show_guest
 from nobokek.views import show_nobokek_json, add_task, create_task
+from statistic.views import show_statistic
 
 app_name = 'nobokek'
 
@@ -17,5 +18,5 @@ urlpatterns = [
     path('json/', show_nobokek_json, name='show_nobokek_json'), #sesuaikan dengan nama fungsi yang dibuat
     path('add/', add_task, name="add_task"),
     path('contact/', create_task, name="contact"),
-    
+    path('statistic/', show_statistic, name="statistic"),
 ]
