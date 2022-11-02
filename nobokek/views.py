@@ -81,3 +81,5 @@ def show_statistic(request: HttpRequest):
     form = Stat()
     context = {"form": form}
     return render(request, "", context)
+
+

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  {%include 'base.html'%}
+  {% block content %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+    <style>
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+      body{
+        background: #abd699;
+      }
+      h1:hover span {
+          display: none;
+      }
+      h1:hover:before {
+          content: "Bagikan Cerita Kamu!";
+      }
+      h1 {
+          text-align: center;
+          margin-top: 20px;
+          font-weight: bold;
+          font-family: 'Poppins', sans-serif;
+      }
+      .waktuTanggal {
+          text-align: center; 
+          font-weight: bold;
+          font-family: 'Poppins', sans-serif;
+          font-size: large;
+          padding-top: 5px;
+      }
+      button:hover {
+          box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+          color: white;
+      }
+      header{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 30px 100px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          z-index: 1000;
+      }
+      header .logo{
+        color: #ffe26a;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 2em;
+        letter-spacing: 2px;
+      }
+      header ul{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      header ul li{
+        list-style: none;
+        margin-left: 20px;
+      }
+      header ul li a{
+        text-decoration: none;
+        padding: 6px 15px;
+        color: #ffe26a;
+      }
+      header ul li a:hover{
+        background: #ffe26a;
+        color: #abd699;
+        border-radius: 20px;
+      }
+      section{
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        padding: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      section::before{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(to bottom, #abd699, #75c9b7);
+        z-index: 1000;
+      }
+      #text{
+        position: absolute;
+        color: #fff;
+        white-space: nowrap;
+        font-size: 7.5vw;
+        z-index: 9;
+      }
+      #btn{
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 30px;
+        border-radius: 40px;
+        background: #ffe26a;
+        color: #abd699;
+        font-size: 1.5em;
+        z-index: 9;
+        transform: translateY(100px);
+      }
+      .sec{
+        position: relative;
+        padding: 100px;
+        background: #75c9b7;
+      }
+      .sec h2{
+        font-size: 3.5em;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      .sec p{
+        font-size: 1.2em;
+        color: #fff;
+      }
+  </style>
+  <div >
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+    </ul>
+</div >
+     {% if user.is_authenticated %}
+     <header>
+      <a href="#" class="logo">NoBokek App</a>
+      <ul>
+        <li><a href="{% url 'nobokek:show_nobokek' %}">Home</a></li>
+        <li><a href="{% url 'button' %}">Forum</a></li>
+      </ul>
+      </header>
+    <body>
+    <section>
+    <div>
+    <h1><span>Financial Thoughts!</span></h1>
+    <script>
+        var dt = new Date();
+        document.getElementById('date-time').innerHTML=dt;
+    </script>
+    </div>
+    
+    <div>
+    <button onclick="location.href='add_pendapat_forum'; " id="myButton" class="add-pendapat-forum-button classloader" style="text-align: center; margin: auto; font-family: Poppins;
+    display: flex; display: grid; margin-top: 20px; padding: 20px; border-radius: 20px ;border-color :white; font-size: 20px; 
+    transition-duration: 0.2s; width: 400px; background-color: #ffe26a;">Add Your Thoughts!</button> 
+    </div> 
+     
+  </section>
+    {% else %}
+    <script>
+        var dt = new Date();
+        document.getElementById('date-time').innerHTML=dt;
+    </script>
+      <style>
+        h1:hover span {
+              display: none;
+          }
+        h1:hover:before {
+            content: "Silahkan Login Terlebih Dahulu!";
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+      </style> 
+    <header>
+      <a href="#" class="logo">NoBokek App</a>
+      <ul>
+        <li><a href="{% url 'nobokek:show_guest' %}">Home</a></li>
+        <li><a href="{% url 'button' %}">Forum</a></li>
+      </ul>
+      </header>
+    <section>
+    <h1><span>Manage Your Lifestyle Now!</span></h1>
+      <p class="waktuTanggal">
+          <a style="text-decoration:none" href="{% url 'nobokek:login' %}">CLICK</a>
+          here for login page, Your Local Date and Time:<br><span id='date-time'></span>
+      </p>
+    </section>
+    <script>
+        var dt = new Date();
+        document.getElementById('date-time').innerHTML=dt;
+    </script>
+    {% endif %}
+  </body>
+  
+</html>
+
+{% endblock content %}
+
+
