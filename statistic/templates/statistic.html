@@ -256,34 +256,7 @@
       vertical-align: middle;
     }
 </style>
-<script>
-    let searchBtn = document.querySelector('.searchBtn');
-    let closeBtn = document.querySelector('.closeBtn');
-    let searchBox = document.querySelector('.searchBox');
-    let navigation = document.querySelector('.navigation');
-    let menuToggle = document.querySelector('.menuToggle');
-    let header = document.querySelector('header');
-  
-    searchBtn.onclick = function(){
-        searchBox.classList.add('active');
-        closeBtn.classList.add('active');
-        searchBtn.classList.add('active');
-        menuToggle.classList.add('hide');
-        header.classList.remove('open');
-    }
-    closeBtn.onclick = function(){
-        searchBox.classList.remove('active');
-        closeBtn.classList.remove('active');
-        searchBtn.classList.remove('active');
-        menuToggle.classList.remove('hide');
-    }
-    menuToggle.onclick = function(){
-        header.classList.toggle('open');
-        searchBox.classList.remove('active');
-        closeBtn.classList.remove('active');
-        searchBtn.classList.remove('active');
-    }
-</script>
+
 <header class="fixed-top">
     <a href="#" class="logo">NoBokek App</a>
     <div class="group">
@@ -291,7 +264,7 @@
             <li><a href="{% url 'add:show_add' %}">Add</a></li>
             <li><a href="{% url 'nobokek:show_nobokek' %}">Home</a></li>
             <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
-            <li><a href="#">Forum</a></li>
+            <li><a href="{% url 'button' %}">Forum</a></li>
             <li><a href="{% url 'nobokek:create_problem' %}" class="contact-us">Contact Us</a></li>      
             <li><a href="{% url 'nobokek:logout' %}" class="logout">Logout</a></li>
         </ul>
@@ -422,4 +395,33 @@
     </div>
 </div>
 <!--end statistic code-->
+
+<script>
+  let searchBtn = document.querySelector('.searchBtn');
+  let closeBtn = document.querySelector('.closeBtn');
+  let searchBox = document.querySelector('.searchBox');
+  let navigation = document.querySelector('.navigation');
+  let menuToggle = document.querySelector('.menuToggle');
+  let header = document.querySelector('header');
+
+  searchBtn.onclick = function(){
+      searchBox.classList.add('active');
+      closeBtn.classList.add('active');
+      searchBtn.classList.add('active');
+      menuToggle.classList.add('hide');
+      header.classList.remove('open');
+  }
+  closeBtn.onclick = function(){
+      searchBox.classList.remove('active');
+      closeBtn.classList.remove('active');
+      searchBtn.classList.remove('active');
+      menuToggle.classList.remove('hide');
+  }
+  menuToggle.onclick = function(){
+      header.classList.toggle('open');
+      searchBox.classList.remove('active');
+      closeBtn.classList.remove('active');
+      searchBtn.classList.remove('active');
+  }
+</script>
 {% endblock content %}
