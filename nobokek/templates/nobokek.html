@@ -288,7 +288,7 @@
     
     <ul class="navigation">
       <li><a href="{% url 'add:show_add' %}">Add</a></li>
-      <li><a href="#">Statistic</a></li>
+      <li><a href="{% url 'statistic:show_statistic' %}">Statistic</a></li>
       <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
       <li><a href="#">Forum</a></li>
       <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
@@ -335,7 +335,7 @@
       <div class="carousel-caption">
         <h5>Statistic</h5>
         <p>Menyajikan data outcome dan income pengguna menggunakan grafik, user dapat melakukan filter berdasarkan pengeluaran dan pemasukkan terendah dan tertinggi</p>
-        <p><a href="#" class="btn btn-warning mt3">Learn More</a></p>
+        <p><a href="{% url 'statistic:show_statistic' %}" class="btn btn-warning mt3">Learn More</a></p>
       </div>
     </div>
     <div class="carousel-item">

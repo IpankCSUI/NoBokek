@@ -68,22 +68,6 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
-def show_statistic(request: HttpRequest):
-    if request.method == "POST":
-        form = Stat(request.POST)
-        if form.is_valid():
-            task = BarangWishlist(
-                date=str(datetime.datetime.now().date()),
-                harga_barang=form.cleaned_data["harga"],
-                user=request.user,
-            )
-            task.save()
-            messages.success(request, "Saved success!")
-            return redirect("nobokek:show_nobokek")
-    form = Stat()
-    context = {"form": form}
-    return render(request, "", context)
-
 @login_required(login_url="/nobokek/login")
 def create_task(request):
     if request.method == "POST":
