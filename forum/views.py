@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
@@ -26,6 +27,11 @@ def add_pendapat_forum(request):
     nameList = PendapatForum.objects.all()
     return render(request, 'AddPendapatForum.html',{'form': form, 'forum':forum, 'nameList':nameList})
 
+def show_forum(request):
+    forum = PendapatForum.objects.all().order_by('-id').distinct()
+    nameList = PendapatForum.objects.all()
+    return render(request,'guest_forum.html',{'forum':forum,'nameList':nameList})
+
 def button(request):
     return render(request, 'buttons.html',{})
 
@@ -41,7 +47,10 @@ def search_pendapat_forum(request):
         if form.is_valid():
             form.save()
             return JsonResponse({'message':'success'})
-    return render(request,'AddPendapatForum.html',{'form' : form,'forum':forum_filter})
+    if request.user.is_authenticated:
+        return render(request,'AddPendapatForum.html',{'form' : form,'forum':forum_filter})
+    else:
+        return render(request,'guest_forum.html',{'form' : form,'forum':forum_filter})
 
 def get_data(request):
     nameList = PendapatForum.objects.all().values

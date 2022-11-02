@@ -1,5 +1,63 @@
 <!DOCTYPE html>
 <html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
     
-    
+    <style>
+      p {
+        font-weight: normal;
+      }
+      .card-text#tag {
+        font-weight: bold;
+      }
+      .card-text {
+        line-height: 1.6;
+        font-size: small;
+      }
+    </style>
+    <div class="container">
+      <div class="row row-cols-3 row-cols-md-3">
+        {% for x in forum %}
+        <div class="card border-1">
+          <div class="card-header bg-light">
+            <h5>{{x.nama}}</h5>
+          </div> 
+          <div class="card-body" style="background-color: rgb(253, 255, 240);">
+            <p class="card-text">
+              Jurusan: {{x.jurusan}} <br>
+              Angkatan : {{x.angkatan}}
+            </p>
+            <p id="tag" class="card-text">Pendapat : {{x.pendapat}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <script>
+        async function getListPendapat() {
+            return fetch("{% url 'get_data' %}").then((res) => res.json())
+        }
+    async function refreshPendapat() {
+        document.getElementById("idRow").innerHTML = ""
+        const listPendapat = await getListPendapat()
+        let cardAjax = ``
+        
+        listPendapat.forEach((pendapat) => {
+        cardAjax += 
+        `\n<div class="row row-cols-3 row-cols-md-3">
+            <div class="card border-1">
+                <div class="card-header bg-light">
+                    <h5>${pendapat.fields.nama}</h5>
+          </div> 
+          <div class="card-body" style="background-color: rgb(253, 255, 240);">
+            <p class="card-text">
+              jurusan: ${pendapat.fields.jurusan} ,<br>
+              "${pendapat.fields.ped}"
+            </p>
+            <p id="tag" class="card-text">#duhpengencurhat</p>
+                </div>
+            </div>
+        </div>`
+        })
+        document.getElementById("idRow").innerHTML = cardAjax}
+    </script>
 </html>

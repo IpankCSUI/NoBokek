@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-    {%include 'base.html'%}
+    {%extends 'base.html'%}
+    {% block content %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
@@ -34,6 +35,7 @@
             border-radius: 20px; 
             border: 1.5px solid black; 
             transition-duration: 0.2s;
+            color : black;
         }
         .tombol:hover {
             color: white;
@@ -95,12 +97,41 @@
                 <form action="" method=POST id="iniform">
                     {%csrf_token%}
                     {{form.as_p}}
-                    <a id="buttonprev" href="{% url 'button' %}" class="previous round" style="width: 130px; background-color: powderblue; color: black; text-decoration: none; font-size: smaller;">&#8249</a>
+                    <a class = "tombol" id="buttonprev" href="{% url 'button' %}" style="width: 130px; background-color: powderblue; text-decoration: none; font-size: smaller;">Back To Previous Page</a>
                     <input class="tombol" type="submit" value="Add Forum" style="width: 130px; background-color: powderblue;">
                 </form>
             </div>
         </div>
     </body>
+    <script>
+        let searchBtn = document.querySelector('.searchBtn');
+        let closeBtn = document.querySelector('.closeBtn');
+        let searchBox = document.querySelector('.searchBox');
+        let navigation = document.querySelector('.navigation');
+        let menuToggle = document.querySelector('.menuToggle');
+        let header = document.querySelector('header');
+      
+        searchBtn.onclick = function(){
+          searchBox.classList.add('active');
+          closeBtn.classList.add('active');
+          searchBtn.classList.add('active');
+          menuToggle.classList.add('hide');
+          header.classList.remove('open');
+        }
+        closeBtn.onclick = function(){
+          searchBox.classList.remove('active');
+          closeBtn.classList.remove('active');
+          searchBtn.classList.remove('active');
+          menuToggle.classList.remove('hide');
+        }
+        menuToggle.onclick = function(){
+          header.classList.toggle('open');
+          searchBox.classList.remove('active');
+          closeBtn.classList.remove('active');
+          searchBtn.classList.remove('active');
+        }
+       
+      </script>
     <script>
         const form = document.getElementById('iniform');
         form.addEventListener("submit", submitMessage);
@@ -162,34 +193,6 @@
             ">Search</button>    
         </form>
     </div>
-    <style>
-        p {
-          font-weight: normal;
-        }
-        .card-text#tag {
-          font-weight: bold;
-        }
-        .card-text {
-          line-height: 1.6;
-          font-size: small;
-        }
-      </style>
-      <div class="container">
-        <div class="row row-cols-3 row-cols-md-3">
-          {% for x in forum %}
-          <div class="card border-1">
-            <div class="card-header bg-light">
-              <h5>{{x.nama}}</h5>
-            </div> 
-            <div class="card-body" style="background-color: rgb(253, 255, 240);">
-              <p class="card-text">
-                Jurusan: {{x.jurusan}} <br>
-                Angkatan : {{x.angkatan}}
-              </p>
-              <p id="tag" class="card-text">{{x.pendapat}}</p>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
+    {%include 'TampilanPendapatForum.html'%}
+      {% endblock content %}
 </html>

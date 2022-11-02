@@ -84,9 +84,6 @@ def show_statistic(request: HttpRequest):
     context = {"form": form}
     return render(request, "", context)
 
-<<<<<<< HEAD
-
-=======
 @login_required(login_url="/nobokek/login")
 def create_task(request):
     if request.method == "POST":
@@ -113,4 +110,3 @@ def add_task(request):
         new_task = ContactUs(user=request.user, nama=name, alamat=email, masalah=problem, date=datetime.now())
         new_task.save()
     return HttpResponse('')
->>>>>>> 0a561e346b23ab42f417b0bca6073ee283eed7ee
