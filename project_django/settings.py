@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'forum',
     'add',
     'report',
-    'statistic',
+    'statistic'
 ]
 
 MIDDLEWARE = [

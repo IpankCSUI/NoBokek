@@ -30,12 +30,9 @@ def add_income(request):
     if request.method == 'POST':
         income = request.POST.get('income')
         desc_in = request.POST.get('desc_in')
-        # desc_out =NULL
-        # outcome=NULL
         date = datetime.date.today()
         user = request.user
         money_obj = Money.objects.create(income=income, desc_in = desc_in, date=date, user=user)
-        # money_obj = Money.objects.create(user=user, income=income, outcome=outcome, desc_in=desc_in, desc_out=desc_out,date=date)
 
         result = {
             'fields':{

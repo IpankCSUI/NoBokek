@@ -1,6 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<!-- get data from /todolist/json -->
+<script>
+  $(document).ready(function(){
+    $('.modal').hide();
+    $('.backdrop').hide();
+    $.get('/nobokek/json/', function(data, status){
+      let content = '';
+      for (let i=0; i<data.length; i++){
+        content += `
+          <div class="text-white hover:scale-105 duration-150 flex flex-row justify-between p-3 lg:w-[30rem] sm:w-[25rem] h-24 bg-zinc-800 box-shadow-md rounded-xl">
+              <div>
+              <h2 class="font-semibold lg:text-md sm:text-sm">${data[i].fields.nama}</h2>
+              <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.alamat}</h3>
+              <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.masalah}</h3>
+              <p class="text-xs text-gray-500">created: ${data[i].fields.date}</p>
+            </div>
+          </div>
+        `;
+        $('.content').html(content);
+      }
+    })
+  })
+</script>
+{% endblock meta %}
 
 {% block content %}
+
 <style>
   *{
     margin: 0;
@@ -25,6 +52,7 @@
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    background: #75c9b7;
     
   }
    header .logo{
@@ -53,10 +81,25 @@
     font-size: 1em;
     padding: 6px 15px;
     color: #ffe26a;
+    font-weight: 700;
+  }
+  header ul li button{
+    position: relative;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 6px 15px;
+    color: #ffe26a;
+    font-weight: 700;
   }
   header ul li a:hover{
     background: #ffe26a;
     color: #abd699;
+    border-radius: 20px;
+  }
+
+  header ul li a.login{
+    background: #ffe26a;
+    color: #75c9b7;
     border-radius: 20px;
   }
   header .search{
@@ -74,7 +117,7 @@
     width: 100%;
     height: 100%;
     display: flex;
-    background: #fff;
+    background: #75c9b7;
     align-items: center;
     padding: 0 30px;
     transition: 0.5s ease-in-out;
@@ -117,7 +160,7 @@
     position: relative;
     display: none;
   }
-  @media (max-width: 600px){
+  @media (max-width: 1200px){
     .searchBtn{
       left: 0;
     }
@@ -142,9 +185,9 @@
       left: 0;
       display: flex;
       flex-direction: column;
-      background: #fff;
+      background: #75c9b7;
       width: 100%;
-      height: calc(35vh - 80px);
+      height: calc(70vh - 80px);
       padding: 40px;
       border-top: 1px solid rgba(0, 0, 0, 0.5);
       transition: 0.5s;
@@ -173,7 +216,7 @@
     bottom: 0;
     width: 100%;
     height: 100px;
-    background: #abd699;
+    background:#abd699;
     z-index: 1000;
   }
 
@@ -195,15 +238,61 @@
     z-index: 9;
     transform: translateY(100px);
   }
+  .section-padding{
+    padding: 100px 0;
+  }
+  .carousel-item{
+    height: 100vh;
+    min-height: 300px;
+  }
+  .carousel-caption{
+    bottom: 220px;
+    z-index: 2;
+  }
+  .carousel-caption h5{
+    font-size: 45px;
+    letter-spacing: 2px;
+    margin-top: 25px;
+    text-transform: uppercase;
+  }
+  .carousel-caption p{
+    width: 60%;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.9;
+  }
+  .carousel-inner::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+  }
+  
+  .w-100{
+    height: 100vh;
+  }
+  .card{
+    background: #16123f;
+    color: #fff;
+  }
+  
 </style>
 
-<header>
-  <a href="#" class="logo">NoBokek App</a>
+<header class="fixed-top">
+  <a href="{% url 'nobokeke:show_guest' %}" class="logo">NoBokek App</a>
   <div class="group">
     
     <ul class="navigation">
-      <li><a href="{% url 'nobokek:show_guest' %}">Home</a></li>
-      <li><a href="#">Forum</a></li>
+      <li><a href="{% url 'add:show_add' %}">Add</a></li>
+      <li><a href="#">Statistic</a></li>
+      <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
+      <li><a href="{% url 'show_forum' %}">Forum</a></li>
+      <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
+      <li><a href="{% url 'nobokek:login' %}" class="login">Login</a></li>
     </ul>
     <div class="search">
       <span class="icon">
@@ -217,39 +306,206 @@
     <input type="text" placeholder="Search here...">
   </div>
 </header>
-<script>
-  let searchBtn = document.querySelector('.searchBtn');
-  let closeBtn = document.querySelector('.closeBtn');
-  let searchBox = document.querySelector('.searchBox');
-  let navigation = document.querySelector('.navigation');
-  let menuToggle = document.querySelector('.menuToggle');
-  let header = document.querySelector('header');
-
-  searchBtn.onclick = function(){
-    searchBox.classList.add('active');
-    closeBtn.classList.add('active');
-    searchBtn.classList.add('active');
-    menuToggle.classList.add('hide');
-    header.classList.remove('open');
-  }
-  closeBtn.onclick = function(){
-    searchBox.classList.remove('active');
-    closeBtn.classList.remove('active');
-    searchBtn.classList.remove('active');
-    menuToggle.classList.remove('hide');
-  }
-  menuToggle.onclick = function(){
-    header.classList.toggle('open');
-    searchBox.classList.remove('active');
-    closeBtn.classList.remove('active');
-    searchBtn.classList.remove('active');
-  }
- 
-</script>
 
 <section>
   <h2 id="text">Let's Track Your Money</h2>
-  <a href="{% url 'nobokek:login' %}" id="btn">Login</a>
+  <a href="#" id="btn">Learn More</a>
 </section>
+
+<h2 class="text-center">Our Services</h2>
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036224506987036753/add.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption">
+        <h5>Add</h5>
+        <p>Fitur yang berupa form untuk menambahkan input dan outcome user serta target pengeluaran user pada setiap bulannya</p>
+        <p><a href="{% url 'add:show_add' %}" class="btn btn-warning mt-3">Learn More</a></p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036224507897200690/statistik.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption">
+        <h5>Statistic</h5>
+        <p>Menyajikan data outcome dan income pengguna menggunakan grafik, user dapat melakukan filter berdasarkan pengeluaran dan pemasukkan terendah dan tertinggi</p>
+        <p><a href="#" class="btn btn-warning mt3">Learn More</a></p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036224507427442748/report.png" class="d-block w-100" alt="...">
+      <div class="carousel-caption">
+        <h5>Report User Info</h5>
+        <p>Menampilkan laporan yang berupa outcome user dan detail pengeluaran yang ingin dilihat user, User juga dapat memakai filter untuk mencari bulan</p>
+        <p><a href="{% url 'report:show_report' %}" class="btn btn-warning mt-3">Learn More</a></p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036224507230294066/forum.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption">
+        <h5>Forum</h5>
+        <p>User yang sudah login dapat melakukan posting mengenai hal yang berkaitan dengan keuangan kemudian dapat dilihat oleh user lain</p>
+        <p><a href="#" class="btn btn-warning mt-3">Learn More</a></p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<h2 class="text-center">Berita Terkini</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="card h-100">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036221394821853204/berita1.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://wahananews.co/serbaserbi/tips-untuk-anak-muda-mengatur-finansial-dengan-baik-adea5swVdp" target="_blank">Tips untuk Anak Muda Mengatur Finansial Dengan Baik</a></h5>
+        <p class="card-text">Dengan adanya financial footprint, maka seluruh kegiatan finansial pun dapat terkoneksi dan terlacak oleh sistem. Oleh sebab itu, anak muda...</p> 
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036220071158227004/berita2.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://finansial.bisnis.com/read/20221029/90/1592800/bulan-inklusi-keuangan-bank-hingga-asuransi-raup-jutaan-nasabah-baru" target="_blank">Bulan Inklusi Keuangan: Bank hingga Asuransi Raup Jutaan Nasabah Baru</a></h5>
+        <p class="card-text">Lembaga jasa keuangan, seperti bank dan asuransi, menggelar pembukaan rekening, polis, efek dan jasa lainnya untuk nasabah di bulan inklusi...</p>
+        
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="https://cdn.discordapp.com/attachments/825967632280584193/1036220071456034897/berita3.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><a href="https://www.jpnn.com/news/waduh-356786-phising-di-sektor-finansial-terdeteksi-di-indonesia" target="_blank">Waduh! 356.786 Phising di Sektor Finansial Terdeteksi di Indonesia</a></h5>
+        <p class="card-text">Kaspersky mengungkapkan sebanyak 356.786 phishing terkait keuangan (finansial) terdeteksi dan telah diblokir terhadap pengguna di Indonesia.</p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- backdrop modals -->
+  <div class="backdrop mt-14 h-[100vh] w-[100vw] bg-red-100 z-10 opacity-80"></div>
+
+  <!-- modals -->
+  <div class="modal absolute flex flex-col justify-center items-center z-20 w-[30rem] h-[20rem] bg-gray-100 outline-2 shadow-2xl rounded-xl hover:scale-105 duration-150">
+    {% csrf_token %}
+    <h1 class="text-2xl font-bold mb-4">Contact Us</h1>
+    <div class="flex flex-col m-1">
+      <label class="font-semibold">Full Name</label>
+      <input class="name w-[17rem] p-2 rounded-lg border-[1px] border-black" placeholder="Your Full Name" required>
+    </div>
+    <div class="flex flex-col m-1">
+      <label class="font-semibold">Email</label>
+      <input class="email w-[17rem] p-2 rounded-lg border-[1px] border-black" placeholder="Your Email Here" required>
+    </div>
+    <div class="flex flex-col m-1">
+      <label class="font-semibold">Problem</label>
+      <input class="problem w-[17rem] p-2 rounded-lg border-[1px] border-black" placeholder="Your Problem Here" required>
+    </div>
+    <button class="send-now-button m-3 bg-green-500 hover:bg-green-700 hover:cursor-pointer px-6 py-2 rounded-lg">Send Now</button>
+  </div>
+
+
+  <script>
+    let searchBtn = document.querySelector('.searchBtn');
+    let closeBtn = document.querySelector('.closeBtn');
+    let searchBox = document.querySelector('.searchBox');
+    let navigation = document.querySelector('.navigation');
+    let menuToggle = document.querySelector('.menuToggle');
+    let header = document.querySelector('header');
+  
+    searchBtn.onclick = function(){
+      searchBox.classList.add('active');
+      closeBtn.classList.add('active');
+      searchBtn.classList.add('active');
+      menuToggle.classList.add('hide');
+      header.classList.remove('open');
+    }
+    closeBtn.onclick = function(){
+      searchBox.classList.remove('active');
+      closeBtn.classList.remove('active');
+      searchBtn.classList.remove('active');
+      menuToggle.classList.remove('hide');
+    }
+    menuToggle.onclick = function(){
+      header.classList.toggle('open');
+      searchBox.classList.remove('active');
+      closeBtn.classList.remove('active');
+      searchBtn.classList.remove('active');
+    }
+   
+  </script>
+<!-- click add task button -->
+<script>
+  $(document).ready( function(){
+    $('.contact-us').click( function(){
+      $('.modal').toggle();
+      $('.backdrop').toggle();
+    })
+  })
+</script>
+
+<!-- click add task button in modal -->
+<script>
+  $(document).ready( function(){
+    $('.send-now-button').click( function(){
+      let name = $('.name').val();
+      let email = $('.email').val();
+      let problem = $('.problem').val();
+      let CSRFtoken = $('input[name="csrfmiddlewaretoken"]').val();
+      $.post('/nobokek/contact/', {
+        nama: name,
+        alamat: email,
+        masalah: problem,
+        csrfmiddlewaretoken: CSRFtoken
+      }, function(){
+        $('.modal').hide();
+        $('.backdrop').hide();
+        $.get('/nobokek/json/', function(data, status){
+          let content = '';
+          for (let i=0; i<data.length; i++){
+            content += `
+              <div class="text-white hover:scale-105 duration-150 flex flex-row justify-between p-3 lg:w-[30rem] sm:w-[25rem] h-24 bg-zinc-800 box-shadow-md rounded-xl">
+                  <div>
+                  <h2 class="font-semibold lg:text-md sm:text-sm">${data[i].fields.nama}</h2>
+                  <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.alamat}</h3>
+                  <h3 class="lg:text-sm sm:text-xs text-gray-500">${data[i].fields.masalah}</h3>
+                  <p class="text-xs text-gray-500">created: ${data[i].fields.date}</p>
+                </div>
+              </div>
+            `;
+            $('.content').html(content);
+          }
+        })
+      })
+    })
+  })
+</script>
+
+<!-- click modals backdrop -->
+<script>
+  $(document).ready( function(){
+    $('.backdrop').click( function(){
+      $('.modal').hide();
+      $('.backdrop').hide();
+    })
+  })
+</script>
+
 
 {% endblock content %}
