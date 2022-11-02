@@ -2,10 +2,6 @@ from django import forms
 from nobokek.models import ContactUs
 
 class ContactForm(forms.ModelForm):
-    nama = forms.TextInput()
-    alamat = forms.TextInput()
-    masalah = forms.Textarea()
-
     class Meta:
         model = ContactUs
         fields = [
