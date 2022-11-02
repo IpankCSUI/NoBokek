@@ -6,33 +6,28 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
-from django.http import HttpResponseRedirect
-from django.http import HttpRequest
-from django.urls import reverse
-from nobokek.models import BarangWishlist
-from nobokek.forms import Stat
 from nobokek.models import ContactUs
-from django.http import HttpResponse
 from django.core import serializers
-from datetime import datetime 
-...
-...
-@login_required(login_url='/nobokek/login/')
-def show_nobokek(request):
-    data_keluhan = ContactUs.objects.all()
-    context = {
-        'list_keluhan': data_keluhan,      
-    }
-    return render(request, "nobokek.html", context)
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
 def show_guest(request):
-    data_barang_wishlist = BarangWishlist.objects.all()
+    return render(request, "guest.html")
+
+@login_required(login_url='/nobokek/login/')
+def show_nobokek(request):  
+    return render(request, "nobokek.html")
+
+@login_required(login_url='/nobokek/login/')
+def show_problem(request):
+    data_problem = ContactUs.objects.filter(user=request.user)
+    form = ContactUs()
     context = {
-        'list_barang': data_barang_wishlist,
-        'nama': 'Kak Cinoy',
-        
+    'list_problem' : data_problem,
+    'form' : form
     }
-    return render(request, "guest.html", context)
+    return render(request, "contact.html", context)
 
 def register(request):
     form = UserCreationForm()
@@ -55,7 +50,7 @@ def login_user(request):
         if user is not None:
             login(request, user) # melakukan login terlebih dahulu
             response = HttpResponseRedirect(reverse("nobokek:show_nobokek")) # membuat response
-            response.set_cookie('last_login', str(datetime.now())) # membuat cookie last_login dan menambahkannya ke dalam response
+            # response.set_cookie('last_login', str(datetime.now()))
             return response
         else:
             messages.info(request, 'Username atau Password salah!')
@@ -68,45 +63,29 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
-def show_statistic(request: HttpRequest):
-    if request.method == "POST":
-        form = Stat(request.POST)
-        if form.is_valid():
-            task = BarangWishlist(
-                date=str(datetime.datetime.now().date()),
-                harga_barang=form.cleaned_data["harga"],
-                user=request.user,
-            )
-            task.save()
-            messages.success(request, "Saved success!")
-            return redirect("nobokek:show_nobokek")
-    form = Stat()
-    context = {"form": form}
-    return render(request, "", context)
+@login_required(login_url='/nobokek/login/')
+def show_json(request):
+    problem = ContactUs.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', problem), content_type='application/json')
 
-@login_required(login_url="/nobokek/login")
-def create_task(request):
-    if request.method == "POST":
-        name = request.POST.get('nama')
-        email = request.POST.get('alamat')
-        problem = request.POST.get('masalah')
+def create_problem(request):
+    if request.method == 'POST':
+        nama = request.POST.get('nama')
+        alamat = request.POST.get('alamat')
+        masalah = request.POST.get('masalah')
+        date = datetime.date.today()
+        user = request.user
+        problem_obj = ContactUs.objects.create(nama=nama, alamat=alamat, masalah=masalah, date=date, user=user)
 
-        new_task = ContactUs(user=request.user, nama=name, alamat=email, masalah=problem, date=datetime.now())
-        new_task.save()
-        return redirect("nobokek:show_nobokek")
-    return render(request, "contact.html")
-
-@login_required(login_url="/nobokek/login")
-def show_nobokek_json(request):
-    tasks = ContactUs.objects.filter(user=request.user)
-    return HttpResponse(serializers.serialize('json', tasks), content_type='application/json')
-
-def add_task(request):
-    if request.method == "POST":
-        name = request.POST.get('nama')
-        email = request.POST.get('alamat')
-        problem = request.POST.get('masalah')
-
-        new_task = ContactUs(user=request.user, nama=name, alamat=email, masalah=problem, date=datetime.now())
-        new_task.save()
-    return HttpResponse('')
+        result = {
+            'fields':{
+                'nama':problem_obj.nama,
+                'alamat':problem_obj.alamat,
+                'masalah':problem_obj.masalah,
+                'date':problem_obj.date,
+                'user':problem_obj.user,
+            },
+            'pk':problem_obj.pk
+        }
+        return JsonResponse(result)
+    # return render(request, 'contact.html')
