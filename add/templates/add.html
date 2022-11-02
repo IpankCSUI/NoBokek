@@ -8,9 +8,18 @@
 
  <style>
   body {
-    background : #FFFFFF
+    background : #FFFFFF;
+    padding: 100px 0;
     /* background: rgb(117,201,183); */
     /* background: linear-gradient(90deg, rgba(117,201,183,1) 0%, rgba(171,214,153,1) 50%); */
+  }
+
+  .grid-container {
+  
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 16px;
+    padding: 16px;
   }
 
 /* CSS */
@@ -132,6 +141,165 @@
   transform: scale(1.05) rotate(-1deg);
 }
 
+header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: #75c9b7;
+    
+  }
+   header .logo{
+    color: #ffe26a;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 2em;
+    letter-spacing: 2px;
+  }
+  .group{
+    display: flex;
+    align-items: center;
+  }
+  header ul{
+    position: relative;
+    display: flex;
+    gap: 30px;
+  }
+  header ul li{
+    list-style: none;
+
+  }
+  header ul li a{
+    position: relative;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 6px 15px;
+    color: #ffe26a;
+    font-weight: 700;
+  }
+  header ul li button{
+    position: relative;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 6px 15px;
+    color: #ffe26a;
+    font-weight: 700;
+  }
+  header ul li a:hover{
+    background: #ffe26a;
+    color: #abd699;
+    border-radius: 20px;
+  }
+
+  header ul li a.logout{
+    background: #d80000;
+    color: #ffffff;
+    border-radius: 20px;
+  }
+  header .search{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .searchBox{
+    position: absolute;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #75c9b7;
+    align-items: center;
+    padding: 0 30px;
+    transition: 0.5s ease-in-out;
+  }
+  .searchBox.active{
+    right: 0;
+  }
+  .searchBox input{
+    width: 100%;
+    border: none;
+    outline: none;
+    height: 50px;
+    font-size: 1.25em;
+    color: #333;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  .searchBtn{
+    position: relative;
+    left: 30px;
+    top: 2.5px;
+    transition: 0.5s ease-in-out;
+  }
+  .searchBtn.active{
+    left: 0;
+  }
+  .closeBtn{
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    scale: 0;
+  }
+  .closeBtn.active{
+    opacity: 1;
+    visibility: visible;
+    transition: 0.5s;
+    scale: 1;
+  }
+  .menuToggle{
+    position: relative;
+    display: none;
+  }
+  @media (max-width: 1200px){
+    .searchBtn{
+      left: 0;
+    }
+    .menuToggle{
+    position: absolute;
+    display: block;
+    font-size: 2em;
+    cursor: pointer;
+    transform: translateX(30px);
+    z-index: 10;
+    }
+    header .navigation{
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      left: 100%;
+    }
+    header.open .navigation{
+      top: 80px;
+      opacity: 1;
+      visibility: visible;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      background: #75c9b7;
+      width: 100%;
+      height: calc(70vh - 80px);
+      padding: 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.5);
+      transition: 0.5s;
+    }
+
+    header.open .navigation li a{
+      font-size: 1.25em;
+    }
+    .hide{
+      display: none;
+    }
+  }
 
   </style>
 
@@ -139,7 +307,7 @@
 <script>
 $(document).ready(function(){
     function refresh() {
-    $.get("http://localhost:8000/add/json", function(data) {
+    $.get("/add/json", function(data) {
     // var res_in = 0;
     // var res_out = 0;
     //  for (i=0;i<data.length;i++){
@@ -150,39 +318,71 @@ $(document).ready(function(){
     //   $(".grid-container").append(`
     //         <p> ${res_in} </p>
     //         <p> ${res_out} </p> `)
-
+    $(".grid-container").empty();
       for (i=0;i<data.length;i++){
       if(data[i].fields.note != null ){
-        $(".grid-container").append(`<div class="card text-bg-primary mb-3" style="max-width: 18rem;">
+        $(".grid-container").append(`<div class="card text-bg-primary mb-3" style="max-width: 18rem;" id="card-${data[i].pk}">
         <div class="card-body">
           <p class="card-text">${data[i].fields.note}</p>
+          <button type="button" class="btn btn-secondary" onclick="delete_note(${data[i].pk})">Delete</button>
         </div>`)
+        
       }
       }
+
       });
     }
 
+  // $("#addin").click(function(){
+  //   $.post("/add/addincome/", {
+  //     income : $('#field_income').val(),
+  //     desc_in : $("#field_desc_in").val(),
+  //   },
+  //   function (result) {
+  //     alert("Okay! Your income has been noted :)")
+  //     $('#field_income').val(''),
+  //     $("#field_desc_in").val(''),
+  //     refresh();
+  //   }
+  //   ) 
+  // })
+
   $("#addin").click(function(){
     $.post("/add/addincome/", {
-      income : $('#field_income').val(),
-      desc_in : $("#field_desc_in").val(),
+      income : $('#income').val(),
+      desc_in : $("#desc_in").val(),
     },
     function (result) {
-      $('#field_income').val(''),
-      $("#field_desc_in").val(''),
+      alert("Okay! Your income has been noted :)")
+      $('#income').val(''),
+      $("#desc_in").val(''),
       refresh();
     }
     ) 
   })
+  // $("#addout").click(function(){
+  //   $.post("/add/addoutcome/", {
+  //     outcome : $('#field_outcome').val(),
+  //     desc_out : $('field_desc_out').val(),
+  // },
+  //   function (result) {
+  //     alert("Okay! Your outcome has been noted :)")
+  //     $('#field_outcome').val(''),
+  //     $("#field_desc_out").val(''),
+  //     refresh();
+  //   }
+  //   ) 
+  // })
 
   $("#addout").click(function(){
     $.post("/add/addoutcome/", {
-      outcome : $('#field_outcome').val(),
-      desc_out : $('field_desc_out').val(),
+      outcome : $('#outcome').val(),
+      desc_out : $('#desc_out').val(),
   },
     function (result) {
-      $('#field_outcome').val(''),
-      $("#field_desc_out").val(''),
+      alert("Okay! Your outcome has been noted :)")
+      $('#outcome').val(''),
+      $("#income").val(''),
       refresh();
     }
     ) 
@@ -194,30 +394,73 @@ $(document).ready(function(){
       note : $('#field_note').val(),
   },
     function (result) {
+      alert("Okay! Your note has been added :)")
       $('#field_note').val(''),
       refresh();
     }
     ) 
   })
   refresh();
+
+  
 });
+function delete_note(id){
+  const deleteURL = '/add/deletenote/' + id;
+  $.ajax({
+      url: deleteURL,
+      type: 'DELETE',
+      success: function(response){
+        
+        $(`#card-${id}`).remove()
+      }
+    })
+}
+
+
+
 
 </script>
 
   </script>
 
+  <header class="fixed-top">
+    <a href="{% url 'nobokek:show_nobokek' %}" class="logo">NoBokek App</a>
+    <div class="group">
+      
+      <ul class="navigation">
+        <li><a href="{% url 'add:show_add' %}">Add</a></li>
+        <li><a href="#">Statistic</a></li>
+        <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
+        <li><a href="#">Forum</a></li>
+        <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
+        <li><a href="{% url 'nobokek:logout' %}" class="logout">Logout</a></li>
+      </ul>
+      <div class="search">
+        <span class="icon">
+          <ion-icon name="search-outline" class="searchBtn"></ion-icon>
+          <ion-icon name="close-outline" class="closeBtn"></ion-icon>
+        </span>
+      </div>
+      <ion-icon name="menu-outline" class="menuToggle"></ion-icon>
+    </div>
+    <div class="searchBox">
+      <input type="text" placeholder="Search here...">
+    </div>
+    
+  </header>
+
   <body>
     <center>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   
-  <div class="jumbotron">
+  <!-- <div class="jumbotron">
     <div class = "header-jumbotron">
       <h1 class="display-4">Let's Track Your Money!</h1>
       <p class="lead">Manage A Better Lifestyle <em>Starting Now</em></p>
       <hr class="my-4">
     </div>
     <em> You may add your income or outcome</p> </em><p>
-  </div>
+  </div> -->
 
   <div class="d-flex justify-content-evenly">
   <div class="d-flex flex-column mb-3">
@@ -242,11 +485,13 @@ $(document).ready(function(){
           <form>
             <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Nominal:</label>
-                <input type="number" min="0" class="form-control" id="field_income">
+                <!-- <input type="number" min="0" class="form-control" id="field_income"> -->
+                {{form.income}}
             </div>
             <div class="mb-3">
                 <label for="message-text" class="col-form-label">Description:</label>
-                <textarea class="form-control" id="field_desc_in"></textarea>
+                <!-- <textarea class="form-control" id="field_desc_in"></textarea> -->
+                {{form.desc_in}}
             </div>
           </form>
         </div>
@@ -269,11 +514,13 @@ $(document).ready(function(){
           <form>
             <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Nominal:</label>
-                <input type="number" min="0" class="form-control" id="field_outcome">
+                <!-- <input type="number" min="0" class="form-control" id="field_outcome"> -->
+                {{form.outcome}}
             </div>
             <div class="mb-3">
                 <label for="message-text" class="col-form-label">Description:</label>
-                <textarea class="form-control" id="field_desc_out"></textarea>
+                <!-- <textarea class="form-control" id="field_desc_out"></textarea> -->
+                {{form.desc_out}}
             </div>
           </form>
         </div>
@@ -315,6 +562,7 @@ $(document).ready(function(){
 
   {% comment %} Add the data below this line {% endcomment %}
   <div class = "grid-container">
+    
   </div>
 
   </div>
