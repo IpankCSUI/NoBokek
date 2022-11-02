@@ -214,9 +214,11 @@
         for (i=0;i<data.length;i++){
           $(".grid-container").append(`<div class="card text-bg-primary mb-3" style="max-width: 18rem;">
           <div class="card-body">
-            
+            <h4> Name </h4>
             <p class="card-text">${data[i].fields.nama}</p>
+            <h4> Email </h4>
             <p class="card-text">${data[i].fields.alamat}</p>
+            <h4> Problem </h4>
             <p class="card-text">${data[i].fields.masalah}</p>
           </div>`)
         }
