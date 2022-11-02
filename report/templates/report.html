@@ -130,7 +130,7 @@
             show_transaksi += `
             <tr>
               <td>${i.fields.date}</td>
-              <td>${i.fields.outcome}</td>
+              <td>(-)${i.fields.outcome}</td>
               <td>${i.fields.desc_out}</td>
             </tr>`
             $('#detailTransaction').html(show_transaksi)
@@ -139,7 +139,7 @@
             show_transaksi += `
             <tr>
               <td>${i.fields.date}</td>
-              <td>${i.fields.income}</td>
+              <td>(+)${i.fields.income}</td>
               <td>${i.fields.desc_in}</td>
             </tr>`
             $('#detailTransaction').html(show_transaksi)
