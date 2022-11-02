@@ -186,7 +186,7 @@
     
     <ul class="navigation">
       <li><a href="{% url 'add:show_add' %}">Add</a></li>
-      <li><a href="#">Statistic</a></li>
+      <li><a href="{% url 'statistic:show_statistic' %}">Statistic</a></li>
       <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
       <li><a href="#">Forum</a></li>
       <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
@@ -372,7 +372,7 @@
             console.log(i);
             show_transaksi += `
             <tr>
-              <td>${i.fields.date}</td>
+              <td>${i.fields.date.day}</td>
               <td>(-) ${i.fields.outcome}</td>
               <td>${i.fields.desc_out}</td>
             </tr>`

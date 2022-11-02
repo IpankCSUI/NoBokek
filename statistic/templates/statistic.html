@@ -256,6 +256,34 @@
       vertical-align: middle;
     }
 </style>
+<script>
+    let searchBtn = document.querySelector('.searchBtn');
+    let closeBtn = document.querySelector('.closeBtn');
+    let searchBox = document.querySelector('.searchBox');
+    let navigation = document.querySelector('.navigation');
+    let menuToggle = document.querySelector('.menuToggle');
+    let header = document.querySelector('header');
+  
+    searchBtn.onclick = function(){
+        searchBox.classList.add('active');
+        closeBtn.classList.add('active');
+        searchBtn.classList.add('active');
+        menuToggle.classList.add('hide');
+        header.classList.remove('open');
+    }
+    closeBtn.onclick = function(){
+        searchBox.classList.remove('active');
+        closeBtn.classList.remove('active');
+        searchBtn.classList.remove('active');
+        menuToggle.classList.remove('hide');
+    }
+    menuToggle.onclick = function(){
+        header.classList.toggle('open');
+        searchBox.classList.remove('active');
+        closeBtn.classList.remove('active');
+        searchBtn.classList.remove('active');
+    }
+</script>
 <header class="fixed-top">
     <a href="#" class="logo">NoBokek App</a>
     <div class="group">
@@ -263,7 +291,7 @@
             <li><a href="{% url 'add:show_add' %}">Add</a></li>
             <li><a href="{% url 'nobokek:show_nobokek' %}">Home</a></li>
             <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
-            <li><a href="#">Forum</a></li>
+            <li><a href="{% url 'forum:button' %}">Forum</a></li>
             <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
             <li><a href="{% url 'nobokek:logout' %}" class="logout">Logout</a></li>
         </ul>
@@ -284,6 +312,35 @@
 <!--Code for statistic-->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js'></script>
 <script>
+    $(document).ready(function(){
+        show_statistic();
+    });
+    function show_report(){
+        let report = "";
+        let report1 ="";
+        $.ajax({
+            url: "{% url 'add:show_json' %}",
+            type: 'GET',
+            dataType:"json",
+            success: function(data){
+                let incomeUser = 0;
+                let outcomeUser = 0;
+                for(i of data){
+                    if(i.fields.date.day)
+                        incomeUser += i.fields.income
+                        outcomeUser += i.fields.outcome
+                }
+                report += `<h3 class="danaTerkumpul center mb-5">Rp${incomeUser}</h3>`
+                $('#totalIncome').html(report)
+                
+                report1 += `<h3 class="danaTerkumpul center mb-5">Rp${outcomeUser}</h3>`
+                $('#totalOutcome').html(report1)
+            },
+            error: function(data){
+                console.log("Error")
+            }
+        })
+    }
     $(document).ready(function() {
         var ctx = $("#chart-line");
         var myLineChart = new Chart(ctx, {
@@ -291,13 +348,13 @@
             data: {
                 labels: ["Minggu-1", "Minggu-2", "Minggu-3", "Minggu-4"],
                 datasets: [{
-                    data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
+                    data: [86, 114, 106, 106],
                     label: "Income",
                     borderColor: "#458af7",
                     backgroundColor:'#458af7',
                     fill: false
                 }, {
-                    data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
+                    data: [282, 350, 411, 502],
                     label: "Outcome",
                     borderColor: "#8e5ea2",
                     fill: true,
