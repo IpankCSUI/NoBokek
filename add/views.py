@@ -45,6 +45,20 @@ def add_income(request):
         }
         return JsonResponse(result)
 
+@csrf_exempt
+def add_income_flutter(request):
+    if request.method == 'POST':
+        money_obj = json.loads(request.body)
+        income = money_obj['income']
+        desc_in = money_obj['desc_in']
+        date = datetime.date.today()
+
+
+        money_obj = Money(income=income, desc_in = desc_in, date=date)
+        money_obj.save();
+        
+        return JsonResponse({"instance": "Pemasukan Berhasil Dibuat!"}, status=200)
+
 # @csrf_exempt
 # def add_outcome(request):
 #     if request.method == 'POST':
@@ -89,6 +103,20 @@ def add_outcome(request):
         }
         return JsonResponse(result)
 
+@csrf_exempt
+def add_outcome_flutter(request):
+    if request.method == 'POST':
+        money_obj = json.loads(request.body)
+        outcome = money_obj['outcome']
+        desc_out = money_obj['desc_out']
+        date = datetime.date.today()
+
+
+        money_obj = Money.objects.create(outcome=outcome, desc_out = desc_out, date=date)
+        money_obj.save();
+        
+        return JsonResponse({"instance": "Pengeluaran Berhasil Dibuat!"}, status=200)
+
 @login_required(login_url='/nobokek/login/')
 @csrf_exempt
 def add_note(request):
@@ -104,6 +132,18 @@ def add_note(request):
             'pk':new_note.pk
         }
         return JsonResponse(result)
+
+@csrf_exempt
+def add_note_flutter(request):
+    if request.method == 'POST':
+        new_note = json.loads(request.body)
+        note = new_note['note']
+
+        new_note = Money.objects.create(note=note)
+        new_note.save();
+        
+        return JsonResponse({"instance": "Note Berhasil Dibuat!"}, status=200)
+
 
 @login_required(login_url='/login/')
 @csrf_exempt
