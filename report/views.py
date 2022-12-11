@@ -27,6 +27,11 @@ def show_report(request):
     return render(request, 'report.html', response)
 
 @login_required(login_url='/nobokek/login/')
+def get_username(request):
+    username = request.user,
+    return JsonResponse({"username": username})
+
+@login_required(login_url='/nobokek/login/')
 def show_target(request):
     targetUser = Target.objects.filter(user=request.user)
     response = {
