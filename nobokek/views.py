@@ -12,6 +12,8 @@ from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+
 
 def show_guest(request):
     return render(request, "guest.html")
@@ -42,6 +44,47 @@ def register(request):
     
     context = {'form':form}
     return render(request, 'register.html', context)
+
+@csrf_exempt
+def login_flutter(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            # Redirect to a success page.
+            return JsonResponse({
+            "status": True,
+            "message": "Successfully Logged In!"
+            # Insert any extra data if you want to pass data to Flutter
+            }, status=200)
+        else:
+            return JsonResponse({
+            "status": False,
+            "message": "Failed to Login, Account Disabled."
+            }, status=401)
+
+    else:
+        return JsonResponse({
+        "status": False,
+        "message": "Failed to Login, check your email/password."
+        }, status=401)
+
+@csrf_exempt
+def logout_flutter(request):
+    try:
+        logout(request)
+        return JsonResponse({
+            "status": True,
+            "message": "Successfully Logged out!"
+        }, status=200)
+    except:
+        return JsonResponse({
+          "status": False,
+          "message": "Failed to Logout"
+        }, status=401)
+
 
 def login_user(request):
     if request.method == 'POST':
