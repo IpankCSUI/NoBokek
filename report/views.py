@@ -29,7 +29,7 @@ def show_report(request):
 @login_required(login_url='/nobokek/login/')
 def get_username(request):
     username = request.user,
-    return JsonResponse({"username": username})
+    return HttpResponse(serializers.serialize('json', username), content_type='application/json')
 
 @login_required(login_url='/nobokek/login/')
 def show_target(request):
