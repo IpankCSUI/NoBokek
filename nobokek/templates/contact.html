@@ -18,6 +18,7 @@
     min-height: 100vh;
     background: #abd699;
     overflow-x: hidden;
+    padding: 100px 0;
   }
   header{
     position: absolute;
@@ -178,17 +179,20 @@
       display: none;
     }
   }
+  .grid-container{
+    background: #ffe26a;
+  }
   </style>
-<header>
-    <a href="#" class="logo">NoBokek App</a>
+<header class="fixed-top" >
+    <a href="{% url 'nobokek:show_nobokek' %}" class="logo">NoBokek App</a>
     <div class="group">
       
       <ul class="navigation">
         <li><a href="{% url 'add:show_add' %}">Add</a></li>
-        <li><a href="#">Statistic</a></li>
+        <li><a href="{% url 'statistic:show_statistic' %}">Statistic</a></li>
         <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
-        <li><a href="#">Forum</a></li>
-        <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
+        <li><a href="{% url 'button' %}">Forum</a></li>
+        <li><a href="{% url 'nobokek:create_problem' %}" class="contact-us">Contact Us</a></li>      
         <li><a href="{% url 'nobokek:logout' %}" class="logout">Logout</a></li>
       </ul>
       <div class="search">
@@ -205,45 +209,129 @@
     
 </header>
 
-<div class="card mx-auto text-center" style="width: 20rem;">
-  <div class="card-body">
-    <div class = "contact-us">
+<script>
+  $(document).ready(function(){
+      function refresh() {
+      $.get("/nobokek/json", function(data) {
+        $(".grid-container").empty();
+        for (i=0;i<data.length;i++){
+          $(".grid-container").append(`<div class="card text-bg-primary mb-3" style="max-width: 18rem;">
+          <div class="card-body">
+            <h4> Name </h4>
+            <p class="card-text">${data[i].fields.nama}</p>
+            <h4> Email </h4>
+            <p class="card-text">${data[i].fields.alamat}</p>
+            <h4> Problem </h4>
+            <p class="card-text">${data[i].fields.masalah}</p>
+          </div>`)
+        }
+        });
+      }
+      
+    $("#send").click(function(){
+      $.ajax({
+        url:"/nobokek/create_problem/",
+        type:"POST",
+        dataType: "json",
+        data:{
+          nama : $('#nama').val(),
+          alamat : $("#alamat").val(),
+          masalah : $("#masalah").val(),
+          csrfmiddlewaretoken: "{{ csrf_token }}"
+        },
+        success: function (result) {
+        alert("Okay! Your problem has been sent :)")
+        refresh();
+      },
+      error: function(){
+        alert("Error")
+      }
+      })})
+    refresh();
+  });
+  </script>
 
-        <h1>Contact Us</h1>
-    
-        <form method="POST" action="">
-            {% csrf_token %}
-            <table>
-                <tr>
-                    <td>Name: </td>
-                    <td><input type="text" name="username" placeholder="Your Full Name Here" class="form-control"></td>
-                </tr>
-                        
-                <tr>
-                    <td>Email: </td>
-                    <td><input type="email" name="email" placeholder="Your Email Here" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Problem: </td>
-                    <td><input type="text" name="problem" placeholder="Your Problem Here" class="form-control"></td>
-                </tr>
-    
-                <tr>
-                    <td></td>
-                </tr>
-            </table>
-            <button class="btn bg-primary" type="submit">Send Now</button>
+<center>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+<div class="d-flex justify-content-evenly">
+<div class="d-flex flex-column mb-3">
+  <button type="button" class="button-33" data-bs-toggle="modal" data-bs-target="#sendProblem" data-bs-whatever="@getbootstrap">Send Your Problem Here</button>
+</div>
+</div>
+
+<div class="modal fade" id="sendProblem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Tell Us Your Problem</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              {{form.nama}}
+              <!-- <input type="text" min="0" class="form-control" id="nama"> -->
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Email:</label>
+            {{form.alamat}}
+            <!-- <input type="text" min="0" class="form-control" id="alamat"> -->
+        </div>
+          <div class="mb-3">
+              <label for="message-text" class="col-form-label">Problem:</label>
+              {{form.masalah}}
+              <!-- <input type="text" min="0" class="form-control" id="masalah"> -->
+          </div>
         </form>
-    
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="send" data-bs-dismiss="modal">Send</button>
+      </div>
     </div>
   </div>
 </div>
 
+
+<div> 
+  <p> <em> Here are your problem list :( </em> </p> 
+</div>
+
+
+
+{% comment %} Add the data below this line {% endcomment %}
+ </center>
+ <div class = "grid-container">
+</div>
+
+<script>
+  let searchBtn = document.querySelector('.searchBtn');
+  let closeBtn = document.querySelector('.closeBtn');
+  let searchBox = document.querySelector('.searchBox');
+  let navigation = document.querySelector('.navigation');
+  let menuToggle = document.querySelector('.menuToggle');
+  let header = document.querySelector('header');
+
+  searchBtn.onclick = function(){
+    searchBox.classList.add('active');
+    closeBtn.classList.add('active');
+    searchBtn.classList.add('active');
+    menuToggle.classList.add('hide');
+    header.classList.remove('open');
+  }
+  closeBtn.onclick = function(){
+    searchBox.classList.remove('active');
+    closeBtn.classList.remove('active');
+    searchBtn.classList.remove('active');
+    menuToggle.classList.remove('hide');
+  }
+  menuToggle.onclick = function(){
+    header.classList.toggle('open');
+    searchBox.classList.remove('active');
+    closeBtn.classList.remove('active');
+    searchBtn.classList.remove('active');
+  }
+</script>
 {% endblock content %}

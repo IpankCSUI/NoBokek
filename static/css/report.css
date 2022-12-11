@@ -1,0 +1,26 @@
+.center {
+  /* height:29vh; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+
+
+.judulDanaTerkumpul {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    color: #024164;
+    margin-top: 30px;
+}
+
+.danaTerkumpul {
+    font-family: Josefin Sans;
+    font-weight: bold;
+    font-size: 30px;
+    color: #772E25;
+    margin-top: 30px;
+}
+

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+  {%extends 'base.html'%}
+  {% block content %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">  
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+
+    <style>
+      
+header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: #75c9b7;
+    
+  }
+   header .logo{
+    color: #ffe26a;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 2em;
+    letter-spacing: 2px;
+  }
+  .group{
+    display: flex;
+    align-items: center;
+  }
+  header ul{
+    position: relative;
+    display: flex;
+    gap: 30px;
+  }
+  header ul li{
+    list-style: none;
+
+  }
+  header ul li a{
+    position: relative;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 6px 15px;
+    color: #ffe26a;
+    font-weight: 700;
+  }
+  header ul li button{
+    position: relative;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 6px 15px;
+    color: #ffe26a;
+    font-weight: 700;
+  }
+  header ul li a:hover{
+    background: #ffe26a;
+    color: #abd699;
+    border-radius: 20px;
+  }
+
+  header ul li a.logout{
+    background: #d80000;
+    color: #ffffff;
+    border-radius: 20px;
+  }
+  header .search{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    z-index: 10;
+    cursor: pointer;
+  }
+  .searchBox{
+    position: absolute;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #75c9b7;
+    align-items: center;
+    padding: 0 30px;
+    transition: 0.5s ease-in-out;
+  }
+  .searchBox.active{
+    right: 0;
+  }
+  .searchBox input{
+    width: 100%;
+    border: none;
+    outline: none;
+    height: 50px;
+    font-size: 1.25em;
+    color: #333;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  .searchBtn{
+    position: relative;
+    left: 30px;
+    top: 2.5px;
+    transition: 0.5s ease-in-out;
+  }
+  .searchBtn.active{
+    left: 0;
+  }
+  .closeBtn{
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    scale: 0;
+  }
+  .closeBtn.active{
+    opacity: 1;
+    visibility: visible;
+    transition: 0.5s;
+    scale: 1;
+  }
+  .menuToggle{
+    position: relative;
+    display: none;
+  }
+
+  @media (max-width: 1200px){
+    .searchBtn{
+      left: 0;
+    }
+    .menuToggle{
+    position: absolute;
+    display: block;
+    font-size: 2em;
+    cursor: pointer;
+    transform: translateX(30px);
+    z-index: 10;
+    }
+    header .navigation{
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+      left: 100%;
+    }
+    header.open .navigation{
+      top: 80px;
+      opacity: 1;
+      visibility: visible;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      background: #75c9b7;
+      width: 100%;
+      height: calc(70vh - 80px);
+      padding: 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.5);
+      transition: 0.5s;
+    }
+
+    header.open .navigation li a{
+      font-size: 1.25em;
+    }
+    .hide{
+      display: none;
+    }
+  }
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+      body{
+        background: #abd699;
+      }
+      h1:hover span {
+          display: none;
+      }
+      h1:hover:before {
+          content: "Bagikan Pendapat Kamu!";
+      }
+      h1 {
+          text-align: center;
+          margin-top: 20px;
+          font-weight: bold;
+          font-family: 'Poppins', sans-serif;
+      }
+      .waktuTanggal {
+          text-align: center; 
+          font-weight: bold;
+          font-family: 'Poppins', sans-serif;
+          font-size: large;
+          padding-top: 5px;
+      }
+      button:hover {
+          box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+          color: white;
+      }
+      header{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 30px 100px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          z-index: 1000;
+      }
+      header .logo{
+        color: #ffe26a;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 2em;
+        letter-spacing: 2px;
+      }
+      header ul{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      header ul li{
+        list-style: none;
+        margin-left: 20px;
+      }
+      header ul li a{
+        text-decoration: none;
+        padding: 6px 15px;
+        color: #ffe26a;
+      }
+      header ul li a:hover{
+        background: #ffe26a;
+        color: #abd699;
+        border-radius: 20px;
+      }
+      section{
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        padding: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #text{
+        position: absolute;
+        color: #fff;
+        white-space: nowrap;
+        font-size: 7.5vw;
+        z-index: 9;
+      }
+      #btn{
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 30px;
+        border-radius: 40px;
+        background: #ffe26a;
+        color: #abd699;
+        font-size: 1.5em;
+        z-index: 9;
+        transform: translateY(100px);
+      }
+      .sec{
+        position: relative;
+        padding: 100px;
+        background: #75c9b7;
+      }
+      .sec h2{
+        font-size: 3.5em;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      .sec p{
+        font-size: 1.2em;
+        color: #fff;
+      }
+  </style>
+  
+  <div >
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+    </ul>
+</div >
+     {% if user.is_authenticated %}
+     <header class="fixed-top">
+      <a href="{% url 'nobokek:show_nobokek' %}" class="logo">NoBokek App</a>
+      <div class="group">
+        
+        <ul class="navigation">
+          <li><a href="{% url 'add:show_add' %}">Add</a></li>
+          <li><a href="{% url 'statistic:show_statistic' %}">Statistic</a></li>
+          <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
+          <li><a href="{% url 'button' %}">Forum</a></li>
+          <li><a href="{% url 'nobokek:create_problem' %}" class="contact-us">Contact Us</a></li>      
+          <li><a href="{% url 'nobokek:logout' %}" class="logout">Logout</a></li>
+        </ul>
+        <div class="search">
+          <span class="icon">
+            <ion-icon name="search-outline" class="searchBtn"></ion-icon>
+            <ion-icon name="close-outline" class="closeBtn"></ion-icon>
+          </span>
+        </div>
+        <ion-icon name="menu-outline" class="menuToggle"></ion-icon>
+      </div>
+      <div class="searchBox">
+        <input type="text" placeholder="Search here...">
+      </div>
+      
+    </header>
+    <script>
+      let searchBtn = document.querySelector('.searchBtn');
+      let closeBtn = document.querySelector('.closeBtn');
+      let searchBox = document.querySelector('.searchBox');
+      let navigation = document.querySelector('.navigation');
+      let menuToggle = document.querySelector('.menuToggle');
+      let header = document.querySelector('header');
+    
+      searchBtn.onclick = function(){
+        searchBox.classList.add('active');
+        closeBtn.classList.add('active');
+        searchBtn.classList.add('active');
+        menuToggle.classList.add('hide');
+        header.classList.remove('open');
+      }
+      closeBtn.onclick = function(){
+        searchBox.classList.remove('active');
+        closeBtn.classList.remove('active');
+        searchBtn.classList.remove('active');
+        menuToggle.classList.remove('hide');
+      }
+      menuToggle.onclick = function(){
+        header.classList.toggle('open');
+        searchBox.classList.remove('active');
+        closeBtn.classList.remove('active');
+        searchBtn.classList.remove('active');
+      }
+     
+    </script>
+    <body>
+    <section>
+    <div>
+    <h1><span>Financial Thoughts!</span></h1>
+    </div>
+    
+    <div>
+    <button onclick="location.href='add_pendapat_forum'; " id="myButton" class="add-pendapat-forum-button classloader" style="text-align: center; margin: auto; font-family: Poppins;
+    display: flex; display: grid; margin-top: 20px; padding: 20px; border-radius: 20px ;border-color :white; font-size: 20px; 
+    transition-duration: 0.2s; width: 400px; background-color: #ffe26a;">Add Your Thoughts!</button> 
+    </div> 
+     
+  </section>
+    {% else %}
+    <script>
+        var dt = new Date();
+        document.getElementById('date-time').innerHTML=dt;
+    </script>
+      <style>
+        h1:hover span {
+              display: none;
+          }
+        h1:hover:before {
+            content: "Silahkan Login Terlebih Dahulu!";
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+      </style> 
+    <header>
+      <a href="{% url 'nobokek:show_guest'%}" class="logo">NoBokek App</a>
+      <ul>
+        <li><a href="{% url 'nobokek:show_guest' %}">Home</a></li>
+        <li><a href="{% url 'button' %}">Forum</a></li>
+      </ul>
+      </header>
+    <section>
+      
+    <h1><span>Manage Your Lifestyle Now!</span></h1>
+      <p class="waktuTanggal">
+          <a style="text-decoration:none" href="{% url 'nobokek:login' %}">CLICK</a>
+          here to add your financial thoughts!<br><span id='date-time'></span>
+      </p>
+      
+    </section>
+    {% endif %}
+</html>
+
+{% endblock content %}
+
+
