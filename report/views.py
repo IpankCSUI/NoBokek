@@ -47,6 +47,7 @@ def show_json_ajax(request):
     return HttpResponse(serializers.serialize('json', targetuser), content_type='application/json')
 
 @login_required(login_url='/nobokek/login/')
+@csrf_exempt
 def add_todolist_ajax(request):
     title = request.POST.get('title')
     description = request.POST.get('description')
