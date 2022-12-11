@@ -37,6 +37,7 @@ CSRF_TRUSTED_ORIGINS = [f'https://nobokekk.up.railway.app']
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,8 +49,7 @@ INSTALLED_APPS = [
     'forum',
     'add',
     'report',
-    'statistic',
-    'corsheaders',
+    'statistic'
 ]
 
 MIDDLEWARE = [
