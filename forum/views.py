@@ -67,11 +67,16 @@ def get_data(request):
 
 @csrf_exempt
 def add_data_pendapat_forum(request):
-        namaa = request.POST.get('nama')
-        jurusann = request.POST.get('jurusan')
-        angkatann = request.POST.get('angkatan')
-        pendapatt = request.POST.get('pendapat')
-        data = PendapatForum(nama = namaa, jurusan = jurusann, angkatan = angkatann, pendapat = pendapatt)
+        nama = request.POST.get('nama')
+        jurusan = request.POST.get('jurusan')
+        angkatan = request.POST.get('angkatan')
+        pendapat = request.POST.get('pendapat')
+        data = PendapatForum(
+            nama = nama, 
+            jurusan = jurusan, 
+            angkatan = angkatan, 
+            pendapat = pendapat,
+        )
         data.save()
         return JsonResponse({'target':'new target'})
 
