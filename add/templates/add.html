@@ -3,15 +3,16 @@
  {% block content %}
  
  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
 
  <style>
   body {
     background : #FFFFFF;
     padding: 100px 0;
-    /* background: rgb(117,201,183); */
-    /* background: linear-gradient(90deg, rgba(117,201,183,1) 0%, rgba(171,214,153,1) 50%); */
   }
 
   .grid-container {
@@ -301,6 +302,49 @@ header{
     }
   }
 
+    /* body{
+    font-family: 'Nunito', sans-serif;
+    padding: 50px;
+  } */
+  .card{
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+      padding: 14px 80px 18px 36px;
+      cursor: pointer;
+  }
+
+  .card:hover{
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
+
+  .card h3{
+    font-weight: 600;
+  }
+
+  .card img{
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    max-height: 120px;
+  }
+
+  @media(max-width: 990px){
+    .card{
+      margin: 20px;
+    }
+  } 
+
+  .center {
+          display: flex;
+          justify-content: center;
+        }
+  .buttonTambah {
+    justify-content: center;
+  }
+
   </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -308,23 +352,15 @@ header{
 $(document).ready(function(){
     function refresh() {
     $.get("/add/json", function(data) {
-    // var res_in = 0;
-    // var res_out = 0;
-    //  for (i=0;i<data.length;i++){
-    //     res_in += data[i].fields.income
-    //     res_out += data[i].fields.outcome
-    //   }
-    //   $(".grid-container").empty()
-    //   $(".grid-container").append(`
-    //         <p> ${res_in} </p>
-    //         <p> ${res_out} </p> `)
+    
+  
     $(".grid-container").empty();
       for (i=0;i<data.length;i++){
       if(data[i].fields.note != null ){
-        $(".grid-container").append(`<div class="card text-bg-primary mb-3" style="max-width: 18rem;" id="card-${data[i].pk}">
+        $(".grid-container").append(`<div class="card" style="max-width: 18rem;" id="card-${data[i].pk}">
         <div class="card-body">
           <p class="card-text">${data[i].fields.note}</p>
-          <button type="button" class="btn btn-secondary" onclick="delete_note(${data[i].pk})">Delete</button>
+          <button type="button" class="btn btn-secondary" onclick="delete_note(${data[i].pk})">Done</button>
         </div>`)
         
       }
@@ -332,20 +368,6 @@ $(document).ready(function(){
 
       });
     }
-
-  // $("#addin").click(function(){
-  //   $.post("/add/addincome/", {
-  //     income : $('#field_income').val(),
-  //     desc_in : $("#field_desc_in").val(),
-  //   },
-  //   function (result) {
-  //     alert("Okay! Your income has been noted :)")
-  //     $('#field_income').val(''),
-  //     $("#field_desc_in").val(''),
-  //     refresh();
-  //   }
-  //   ) 
-  // })
 
   $("#addin").click(function(){
     $.post("/add/addincome/", {
@@ -360,19 +382,6 @@ $(document).ready(function(){
     }
     ) 
   })
-  // $("#addout").click(function(){
-  //   $.post("/add/addoutcome/", {
-  //     outcome : $('#field_outcome').val(),
-  //     desc_out : $('field_desc_out').val(),
-  // },
-  //   function (result) {
-  //     alert("Okay! Your outcome has been noted :)")
-  //     $('#field_outcome').val(''),
-  //     $("#field_desc_out").val(''),
-  //     refresh();
-  //   }
-  //   ) 
-  // })
 
   $("#addout").click(function(){
     $.post("/add/addoutcome/", {
@@ -387,7 +396,6 @@ $(document).ready(function(){
     }
     ) 
   })
-  // refresh();
 
   $("#addnote").click(function(){
     $.post("/add/addnote/", {
@@ -416,9 +424,6 @@ function delete_note(id){
     })
 }
 
-
-
-
 </script>
 
   </script>
@@ -429,10 +434,10 @@ function delete_note(id){
       
       <ul class="navigation">
         <li><a href="{% url 'add:show_add' %}">Add</a></li>
-        <li><a href="#">Statistic</a></li>
+        <li><a href="{% url 'statistic:show_statistic' %}">Statistic</a></li>
         <li><a href="{% url 'report:show_report' %}">Report User Info</a></li>
         <li><a href="{% url 'button' %}">Forum</a></li>
-        <li><a href="{% url 'nobokek:contact' %}" class="contact-us">Contact Us</a></li>      
+        <li><a href="{% url 'nobokek:create_problem' %}" class="contact-us">Contact Us</a></li>      
         <li><a href="{% url 'nobokek:logout' %}" class="logout">Logout</a></li>
       </ul>
       <div class="search">
@@ -449,28 +454,53 @@ function delete_note(id){
     
   </header>
 
+  <script> 
+  let searchBtn = document.querySelector('.searchBtn');
+  let closeBtn = document.querySelector('.closeBtn');
+  let searchBox = document.querySelector('.searchBox');
+  let navigation = document.querySelector('.navigation');
+  let menuToggle = document.querySelector('.menuToggle');
+  let header = document.querySelector('header');
+
+  searchBtn.onclick = function(){
+    searchBox.classList.add('active');
+    closeBtn.classList.add('active');
+    searchBtn.classList.add('active');
+    menuToggle.classList.add('hide');
+    header.classList.remove('open');
+  }
+  closeBtn.onclick = function(){
+    searchBox.classList.remove('active');
+    closeBtn.classList.remove('active');
+    searchBtn.classList.remove('active');
+    menuToggle.classList.remove('hide');
+  }
+  menuToggle.onclick = function(){
+    header.classList.toggle('open');
+    searchBox.classList.remove('active');
+    closeBtn.classList.remove('active');
+    searchBtn.classList.remove('active');
+  }
+</script>
+
+
   <body>
+    
+    <div class = "center">
     <center>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  
-  <!-- <div class="jumbotron">
-    <div class = "header-jumbotron">
-      <h1 class="display-4">Let's Track Your Money!</h1>
-      <p class="lead">Manage A Better Lifestyle <em>Starting Now</em></p>
-      <hr class="my-4">
-    </div>
-    <em> You may add your income or outcome</p> </em><p>
-  </div> -->
 
-  <div class="d-flex justify-content-evenly">
-  <div class="d-flex flex-column mb-3">
-    <div class="d-flex flex-row">
-      <button type="button" class="button-29" data-bs-toggle="modal" data-bs-target="#modalIncome" data-bs-whatever="@getbootstrap">Add Income</button>
-      <button type="button" class="button-30" data-bs-toggle="modal" data-bs-target="#modalOutcome" data-bs-whatever="@getbootstrap">Add Outcome</button>
-    </div>
-    
-    <button type="button" class="button-33" data-bs-toggle="modal" data-bs-target="#modalNote" data-bs-whatever="@getbootstrap">Add Note</button>
+  <div class buttonTambah> 
+  <div class="d-flex justify-content-evenly" margin-left = 2-em;>
+    <div class="d-flex flex-column mb-3">
+      <div class="d-flex flex-row">
+        <button type="button" class="button-29" data-bs-toggle="modal" data-bs-target="#modalIncome" data-bs-whatever="@getbootstrap">Add Income</button>
+        <button type="button" class="button-30" data-bs-toggle="modal" data-bs-target="#modalOutcome" data-bs-whatever="@getbootstrap">Add Outcome</button>
+      </div>
+      
+      <button type="button" class="button-33" data-bs-toggle="modal" data-bs-target="#modalNote" data-bs-whatever="@getbootstrap">Add Reminder</button>
 
+    </div>
   </div>
 </div>
 
@@ -478,19 +508,17 @@ function delete_note(id){
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">New Income</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel"> Cha-Ching *Money Sound* </h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nominal:</label>
-                <!-- <input type="number" min="0" class="form-control" id="field_income"> -->
+                <label for="recipient-name" class="col-form-label">How Much Is It? (Rp) </label>
                 {{form.income}}
             </div>
             <div class="mb-3">
-                <label for="message-text" class="col-form-label">Description:</label>
-                <!-- <textarea class="form-control" id="field_desc_in"></textarea> -->
+                <label for="message-text" class="col-form-label">What Is It? </label>
                 {{form.desc_in}}
             </div>
           </form>
@@ -507,19 +535,17 @@ function delete_note(id){
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">New Outcome</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Cha-Ching *Money Sound*</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form>
             <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nominal:</label>
-                <!-- <input type="number" min="0" class="form-control" id="field_outcome"> -->
+                <label for="recipient-name" class="col-form-label">How Much Is It? (Rp)</label>
                 {{form.outcome}}
             </div>
             <div class="mb-3">
-                <label for="message-text" class="col-form-label">Description:</label>
-                <!-- <textarea class="form-control" id="field_desc_out"></textarea> -->
+                <label for="message-text" class="col-form-label">What Is it? </label>
                 {{form.desc_out}}
             </div>
           </form>
@@ -542,7 +568,7 @@ function delete_note(id){
         <div class="modal-body">
           <form>
             <div class="mb-3">
-                <label for="message-text" class="col-form-label">Description:</label>
+                <label for="message-text" class="col-form-label">What Is It?</label>
                 <textarea class="form-control" id="field_note"></textarea>
             </div>
           </form>
@@ -557,7 +583,7 @@ function delete_note(id){
   </div>
 
   <div> 
-    <p> <em> Here are your notes :) </em> </p> 
+    <p> <em> Your notes will be viewed here :) </em> </p> 
   </div>
 
   {% comment %} Add the data below this line {% endcomment %}
@@ -567,6 +593,7 @@ function delete_note(id){
 
   </div>
    </center>
+  </div>
 </body> 
 
  {% endblock content %}

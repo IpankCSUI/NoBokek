@@ -16,6 +16,7 @@ from django.http.response import JsonResponse, HttpResponse
 from add.models import Money
 from report.models import Target
 
+@login_required(login_url='/nobokek/login/')
 def show_report(request):
     transactionUser = Money.objects.all()
     response = {
@@ -25,6 +26,12 @@ def show_report(request):
     }
     return render(request, 'report.html', response)
 
+@login_required(login_url='/nobokek/login/')
+def get_username(request):
+    username = request.user,
+    return HttpResponse(serializers.serialize('json', username), content_type='application/json')
+
+@login_required(login_url='/nobokek/login/')
 def show_target(request):
     targetUser = Target.objects.filter(user=request.user)
     response = {
@@ -39,6 +46,8 @@ def show_json_ajax(request):
     targetuser = Target.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize('json', targetuser), content_type='application/json')
 
+@login_required(login_url='/nobokek/login/')
+@csrf_exempt
 def add_todolist_ajax(request):
     title = request.POST.get('title')
     description = request.POST.get('description')
@@ -50,6 +59,7 @@ def add_todolist_ajax(request):
     add_todolist_ajax.save()
     return JsonResponse({"target": "new target"})
 
+@login_required(login_url='/nobokek/login/')
 @csrf_exempt
 def delete_todolist_ajax(request,id):
     target = Target.objects.filter(pk=id)   
