@@ -69,7 +69,7 @@ def get_data(request):
 def add_data_pendapat_forum(request):
         namaa = request.POST.get('nama')
         jurusann = request.POST.get('jurusan')
-        angkatann = request.POST.get('angkatann')
+        angkatann = request.POST.get('angkatan')
         pendapatt = request.POST.get('pendapat')
         data = PendapatForum(nama = namaa, jurusan = jurusann, angkatan = angkatann, pendapat = pendapatt)
         data.save()
