@@ -139,14 +139,25 @@ def show_json(request):
 
 def create_problem(request):
     form = ContactForm()
-    contact = ContactForm.objects.all().order_by('-id').distinct()
-    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message' : 'success'})
-    nameList = ContactForm.objects.all()
-    return render(request, 'contact.html',{'form': form, 'contact':contact, 'nameList':nameList})
+    if request.method == 'POST':
+        nama = request.POST.get('nama')
+        alamat = request.POST.get('alamat')
+        masalah = request.POST.get('masalah')
+        date = datetime.date.today()
+        user = request.user
+        problem_obj = ContactUs.objects.create(nama=nama, alamat=alamat, masalah=masalah, date=date, user=user)
+        result = {
+            'fields':{
+                'nama':problem_obj.nama,
+                'alamat':problem_obj.alamat,
+                'masalah':problem_obj.masalah,
+                'date':problem_obj.date,
+                'user':problem_obj.user.username,
+            },
+            'pk':problem_obj.pk
+        }
+        return JsonResponse(result)
+    return render(request, 'contact.html', {'form': form})
 
 def add_todolist_ajax(request):
     title = request.POST.get('title')
