@@ -1,6 +1,6 @@
 from django.urls import path
 
-from nobokek.views import show_nobokek, show_guest, show_json, show_problem, login_user, logout_user, register, create_problem, login_flutter, logout_flutter
+from nobokek.views import flutter_register, show_nobokek, show_guest, show_json, show_problem, login_user, logout_user, register, create_problem, login_flutter, logout_flutter
 from statistic.views import show_statistic
 
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path('json/', show_json, name='show_json'), #sesuaikan dengan nama fungsi yang dibuat
     path('create_problem/', create_problem, name="create_problem"),
     path('statistic/', show_statistic, name="statistic"),
+    path('flutter_register/', flutter_register, name='flutter_register'),
 ]

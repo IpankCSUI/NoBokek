@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -13,7 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth.models import User
 
 def show_guest(request):
     return render(request, "guest.html")
@@ -69,6 +70,30 @@ def login_flutter(request):
         return JsonResponse({
         "status": False,
         "message": "Failed to Login, check your email/password."
+        }, status=401)
+
+@csrf_exempt
+def flutter_register(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data['username']
+        password = data['password']
+        is_user_already_exist = User.objects.filter(username=username).exists();
+        if not is_user_already_exist:
+            user = User.objects.create_user(username=username,password=password)
+            user.save()
+            return JsonResponse({
+                "status": True,
+                "username": user.username,
+            }, status=200)
+        else:
+            return JsonResponse({
+              "status": False,
+              "message": "Failed to register, username already exist."
+            }, status=401)
+    else:
+        return JsonResponse({
+            "status": "error"
         }, status=401)
 
 @csrf_exempt
