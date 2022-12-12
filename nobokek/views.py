@@ -146,7 +146,7 @@ def create_problem(request):
             form.save()
             return JsonResponse({'message' : 'success'})
     nameList = ContactForm.objects.all()
-    return render(request, 'AddPendapatForum.html',{'form': form, 'contact':contact, 'nameList':nameList})
+    return render(request, 'contact.html',{'form': form, 'contact':contact, 'nameList':nameList})
 
 def add_todolist_ajax(request):
     title = request.POST.get('title')
