@@ -38,7 +38,7 @@ def show_forum(request):
     return render(request,'guest_forum.html',{'forum':forum,'nameList':nameList})
 
 def show_json_ajax(request):
-    pendapat = PendapatForum.objects.filter(user=request.user)
+    pendapat = PendapatForum.objects.all()
     return HttpResponse(serializers.serialize('json', pendapat), content_type='application/json')
 
 def button(request):
