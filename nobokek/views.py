@@ -138,17 +138,26 @@ def show_json(request):
     return HttpResponse(serializers.serialize('json', problem), content_type='application/json')
 
 def create_problem(request):
-    nama = request.POST.get('nama')
-    alamat = request.POST.get('alamat')
-    masalah = request.POST.get('masalah')
-    create_problem_ajax = ContactUs(
-        user = request.user,
-        nama = nama,
-        alamat = alamat,
-        masalah = masalah,
-    )
-    create_problem_ajax.save()
-    return JsonResponse({"contactus": "new contactus"})
+    form = ContactForm()
+    if request.method == 'POST':
+        nama = request.POST.get('nama')
+        alamat = request.POST.get('alamat')
+        masalah = request.POST.get('masalah')
+        date = datetime.date.today()
+        user = request.user
+        problem_obj = ContactUs.objects.create(nama=nama, alamat=alamat, masalah=masalah, date=date, user=user)
+        result = {
+            'fields':{
+                'nama':problem_obj.nama,
+                'alamat':problem_obj.alamat,
+                'masalah':problem_obj.masalah,
+                'date':problem_obj.date,
+                'user':problem_obj.user.username,
+            },
+            'pk':problem_obj.pk
+        }
+        return JsonResponse(result)
+    return render(request, 'contact.html', {'form': form})
 
 def add_todolist_ajax(request):
     title = request.POST.get('title')
