@@ -10,5 +10,6 @@ urlpatterns = [
     path('target/', show_target, name='show_target'),
     path('json/', show_json_ajax, name='show_json_ajax'),
     path('add/', add_todolist_ajax , name='add_todolist_ajax'),
+    path('get_username/', get_username, name='get_username'),
     path('delete/<int:id>/', delete_todolist_ajax, name='delete_todolist_ajax'),
 ]

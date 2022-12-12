@@ -1,5 +1,6 @@
 from unicodedata import name
 from django.http import JsonResponse
+from django.core import serializers
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -14,8 +15,12 @@ from django.urls import reverse
 import json
 from .models import PendapatForum
 from .forms import AddPendapatForum
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+
+
+
 def add_pendapat_forum(request):
     form = AddPendapatForum()
     forum = PendapatForum.objects.all().order_by('-id').distinct()
@@ -31,6 +36,10 @@ def show_forum(request):
     forum = PendapatForum.objects.all().order_by('-id').distinct()
     nameList = PendapatForum.objects.all()
     return render(request,'guest_forum.html',{'forum':forum,'nameList':nameList})
+
+def show_json_ajax(request):
+    pendapat = PendapatForum.objects.all()
+    return HttpResponse(serializers.serialize('json', pendapat), content_type='application/json')
 
 def button(request):
     return render(request, 'buttons.html',{})
@@ -56,6 +65,7 @@ def get_data(request):
     nameList = PendapatForum.objects.all().values
     return JsonResponse({'object': nameList})
 
+@csrf_exempt
 def add_data_pendapat_forum(request):
     if request.method == 'POST':
         namaa = request.POST.get('nama')
@@ -65,3 +75,4 @@ def add_data_pendapat_forum(request):
         data = PendapatForum(nama = namaa, jurusan = jurusann, angkatan = angkatann, pendapat = pendapatt)
         data.save()
         return JsonResponse({'message':'success'})
+

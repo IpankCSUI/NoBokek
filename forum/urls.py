@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import button,add_data_pendapat_forum,add_pendapat_forum,search_pendapat_forum,get_data, show_forum
+from .views import button,add_data_pendapat_forum,add_pendapat_forum,search_pendapat_forum,get_data, show_forum, show_json_ajax
 
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('get_data/',get_data, name='get_data'),
     path('add_data_pendapat_forum/',add_data_pendapat_forum , name='add_data_pendapat_forum'),
     path('show_forum/',show_forum,name='show_forum'),
+    path('json/', show_json_ajax, name='show_json_ajax'),
 ]

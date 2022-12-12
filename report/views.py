@@ -27,6 +27,11 @@ def show_report(request):
     return render(request, 'report.html', response)
 
 @login_required(login_url='/nobokek/login/')
+def get_username(request):
+    username = request.user,
+    return HttpResponse(serializers.serialize('json', username), content_type='application/json')
+
+@login_required(login_url='/nobokek/login/')
 def show_target(request):
     targetUser = Target.objects.filter(user=request.user)
     response = {
@@ -42,6 +47,7 @@ def show_json_ajax(request):
     return HttpResponse(serializers.serialize('json', targetuser), content_type='application/json')
 
 @login_required(login_url='/nobokek/login/')
+@csrf_exempt
 def add_todolist_ajax(request):
     title = request.POST.get('title')
     description = request.POST.get('description')
